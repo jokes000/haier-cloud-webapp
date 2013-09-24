@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.edu.sjtu.se.dslab.haiercloud.web.entity.Cluster;
 import cn.edu.sjtu.se.dslab.haiercloud.web.entity.VirtualMachine;
+import cn.edu.sjtu.se.dslab.haiercloud.web.service.IAuthService;
 import cn.edu.sjtu.se.dslab.haiercloud.web.service.IClusterMetaService;
 import cn.edu.sjtu.se.dslab.haiercloud.web.service.IClusterService;
 import cn.edu.sjtu.se.dslab.haiercloud.web.service.IVirtualMachineService;
@@ -35,8 +36,21 @@ public class HomeController {
     
     @Resource(name = "virtualMachineService")
     IVirtualMachineService vmService;
+    
+    @Resource(name = "authService")
+	IAuthService authService;
 
     @RequestMapping(value="/", method = RequestMethod.GET)
+    public String redirectLogin() {
+        
+    	if (!authService.isAuthenticated()) {
+    		return "redirect:/login";
+    	}
+    	
+    	return "redirect:/home";
+    }
+    
+    @RequestMapping(value="/home", method = RequestMethod.GET)
     public ModelAndView getHomePage() {
         // configure redirect
         ModelAndView mav = new ModelAndView();
@@ -84,7 +98,7 @@ public class HomeController {
         mav.setViewName("/vm");
 
         // get data
-     // add data
+        // add data
         int pageSize = 10;
         
         long totalNumber = vmService.totalNumber();

@@ -16,6 +16,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * group entity
  * 
@@ -36,6 +39,12 @@ public class Group implements Serializable {
 	private long id;
 	@Column(length = 30)
 	private String name;
+	// Shiro role字符串
+	@Column(length = 64)
+	private String role;
+	@Column(length = 256)
+	private String value;
+	@Fetch(FetchMode.SUBSELECT)
 	@ManyToMany(targetEntity = cn.edu.sjtu.se.dslab.haiercloud.web.entity.Perm.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "TB_GROUP_PERM", joinColumns = { @JoinColumn(name = "FK_GROUP_ID") }, inverseJoinColumns = { @JoinColumn(name = "FK_PERM_ID") })
 	private Set<Perm> permsList = new HashSet<Perm>();
@@ -54,6 +63,22 @@ public class Group implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	public Set<Perm> getPermsList() {

@@ -3,16 +3,26 @@ package cn.edu.sjtu.se.dslab.haiercloud.web.service;
 import java.util.List;
 import java.util.Set;
 
+import cn.edu.sjtu.se.dslab.haiercloud.web.auth.CommonVariableModel;
 import cn.edu.sjtu.se.dslab.haiercloud.web.entity.Group;
 import cn.edu.sjtu.se.dslab.haiercloud.web.entity.Perm;
 import cn.edu.sjtu.se.dslab.haiercloud.web.entity.User;
 
 public interface IAuthService {
 
+	/* ------------------------- 登陆管理 ------------------------- */
+	public boolean isAuthenticated();
+	
+	public boolean register(User user);
+	
+	public CommonVariableModel getCommonVariableModel();
+	
 	/* ------------------------- 用户管理 ------------------------- */
 	public boolean updateUserPassword(String oldPassword, String newPassword);
 
 	public User getUserById(long id);
+	
+	public List<User> getAllUsers();
 
 	public List<User> getUserByPage(int pageNum, int pageSize);
 

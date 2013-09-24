@@ -2,6 +2,9 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
     
+    <definition name="/login" template="/WEB-INF/pages/static/login.jsp" />
+    <definition name="/register" template="/WEB-INF/pages/static/register.jsp" />
+    
     <definition name="base" template="/WEB-INF/pages/template/template.jsp">
         <put-attribute name="meta" value="/WEB-INF/pages/template/meta.jsp" />
         <put-attribute name="title" value="" />
@@ -31,9 +34,9 @@
     	<put-attribute name="body" value="/WEB-INF/pages/vm/vm.jsp" />
     </definition>
     
-    <definition name="/login" extends="base">
-    	<put-attribute name="title" value="登陆" />
-    	<put-attribute name="body" value="/WEB-INF/pages/static/login.jsp" />
+    <definition name="/unauthorized" extends="base">
+    	<put-attribute name="title" value="未授权" />
+    	<put-attribute name="body" value="/WEB-INF/pages/static/unauthorized.jsp" />
     </definition>
     <!-- end of Home page -->
     
@@ -94,9 +97,9 @@
     	<put-attribute name="body" value="/WEB-INF/pages/admin/user/view.jsp" />
     </definition>
     
-    <definition name="/admin/user/add" extends="base">
-    	<put-attribute name="title" value="添加用户" />
-    	<put-attribute name="body" value="/WEB-INF/pages/admin/user/add.jsp" />
+    <definition name="/admin/user/detail" extends="base">
+    	<put-attribute name="title" value="用户信息" />
+    	<put-attribute name="body" value="/WEB-INF/pages/admin/user/detail.jsp" />
     </definition>
     
     <definition name="/admin/permission" extends="base">

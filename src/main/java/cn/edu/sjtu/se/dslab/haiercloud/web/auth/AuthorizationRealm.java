@@ -25,7 +25,7 @@ import com.google.common.collect.Lists;
 /**
  * apache shiro 的公用授权类
  * 
- * @author vincent
+ * @author smile
  * 
  */
 public abstract class AuthorizationRealm extends AuthorizingRealm {
@@ -41,7 +41,7 @@ public abstract class AuthorizationRealm extends AuthorizingRealm {
 	 * set default permissions
 	 * 
 	 * @param defaultPermissionString
-	 *            若存在多个值，使用都好","分割
+	 *            若存在多个值，使用逗号","分割
 	 */
 	public void setDefaultPermissionString(String defaultPermissionString) {
 		String[] perms = StringUtils.split(defaultPermissionString, ",");
@@ -105,10 +105,14 @@ public abstract class AuthorizationRealm extends AuthorizingRealm {
 		// 添加用户拥有的role
 		addRoles(info, groupsList);
 
-		return null;
+		return info;
 	}
 
 	private void addRoles(SimpleAuthorizationInfo info, Set<Group> groupsList) {
+		
+		/**
+		 *  目前addRoles没有起到作用
+		 */
 		List<String> temp = CollectionUtils.extractToList(groupsList, "role",
 				true);
 		List<String> roles = getValue(temp, "roles\\[(.*?)\\]");
@@ -118,6 +122,23 @@ public abstract class AuthorizationRealm extends AuthorizingRealm {
 		}
 
 		info.addRoles(roles);
+
+		
+
+		// 将group对应的permission加入
+		for (Group group : groupsList) {
+			
+			List<String> tmp = CollectionUtils.extractToList(group.getPermsList(), "permission",
+					true);
+			List<String> permissions = getValue(tmp, "perms\\[(.*?)\\]");
+			// 添加默认的permissions到permissions
+			if (CollectionUtils.isNotEmpty(defaultPermissions)) {
+				CollectionUtils.addAll(permissions, defaultPermissions.iterator());
+			}
+
+			// 将当前用户拥有的permissions设置到SimpleAuthorizationInfo中
+			info.addStringPermissions(permissions);	
+		}
 	}
 
 	private void addPermissions(SimpleAuthorizationInfo info,
@@ -125,6 +146,7 @@ public abstract class AuthorizationRealm extends AuthorizingRealm {
 		// 解析当前用户资源中的permissions
 		List<String> temp = CollectionUtils.extractToList(authorizationInfo,
 				"permission", true);
+
 		List<String> permissions = getValue(temp, "perms\\[(.*?)\\]");
 
 		// 添加默认的permissions到permissions
@@ -135,21 +157,21 @@ public abstract class AuthorizationRealm extends AuthorizingRealm {
 		// 将当前用户拥有的permissions设置到SimpleAuthorizationInfo中
 		info.addStringPermissions(permissions);
 	}
-	
+
 	private List<String> getValue(List<String> obj, String regex) {
 		List<String> result = new ArrayList<String>();
-		
+
 		if (CollectionUtils.isEmpty(obj)) {
 			return result;
 		}
-		
+
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(StringUtils.join(obj, ","));
-		
+
 		while (matcher.find()) {
 			result.add(matcher.group(1));
 		}
-		
+
 		return result;
 	}
 }

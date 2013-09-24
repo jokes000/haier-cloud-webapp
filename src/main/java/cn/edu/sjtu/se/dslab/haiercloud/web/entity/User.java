@@ -17,6 +17,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * user class
  * 
@@ -51,10 +54,12 @@ public class User implements Serializable {
 	@Column(length = 128)
 	private String email;
 	// groups
+	@Fetch( FetchMode.SUBSELECT)
 	@ManyToMany(targetEntity = cn.edu.sjtu.se.dslab.haiercloud.web.entity.Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "TB_GROUP_USER", joinColumns = { @JoinColumn(name = "FK_USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "FK_GROUP_ID") })
 	private Set<Group> groupsList = new HashSet<Group>();
 	// permissions and urls user can access
+	@Fetch( FetchMode.SUBSELECT)
 	@ManyToMany(targetEntity = cn.edu.sjtu.se.dslab.haiercloud.web.entity.Perm.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "TB_PERM_USER", joinColumns = { @JoinColumn(name = "FK_USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "FK_PERM_ID") })
 	private Set<Perm> permsList = new HashSet<Perm>();

@@ -12,7 +12,9 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.sjtu.se.dslab.haiercloud.web.dao.IGroupDao;
 import cn.edu.sjtu.se.dslab.haiercloud.web.dao.IPermDao;
+import cn.edu.sjtu.se.dslab.haiercloud.web.entity.Group;
 import cn.edu.sjtu.se.dslab.haiercloud.web.entity.Perm;
 
 /**
@@ -28,6 +30,9 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
 	@Resource(name = "permDao")
 	private IPermDao permDao;
 	
+	@Resource(name = "groupDao")
+	private IGroupDao groupDao;
+	
 	private String filterChainDefinitions;
 	
 	
@@ -35,6 +40,7 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
 		
 		// get all permissions
 		List<Perm> permsList = permDao.queryAll();
+		//List<Group> groupsList = groupDao.queryAll();
 		
 		Ini ini = new Ini();
 		// load default urls
@@ -49,6 +55,16 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
 				section.put(perm.getValue(), perm.getPermission());
 			}
 		}
+		
+		// 循环数据库组的url
+//		for (Iterator<Group> it = groupsList.iterator(); it.hasNext(); ) {
+//			Group group = it.next();
+//			if (StringUtils.isNotEmpty(group.getValue()) && StringUtils.isNotEmpty(group.getRole())) {
+//				for (Perm perm : group.getPermsList()) {
+//					section.put(perm.getValue(), perm.getPermission());
+//				}
+//			} 
+//		}
 		
 		return section;
 	}

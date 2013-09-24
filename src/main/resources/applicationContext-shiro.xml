@@ -16,7 +16,7 @@
 				<property name="hashAlgorithmName" value="MD5" />
 			</bean>
 		</property>
-		<property name="defaultPermissionString" value="security:change-password,security:main" />
+		<property name="defaultPermissionString" value="security:change-password,security:home" />
 		<property name="authorizationCacheName" value="shiroAuthorizationCache" />
 	</bean>
 
@@ -44,14 +44,22 @@
 		<!-- 默认的连接配置 -->
 		<property name="filterChainDefinitions">
 			<value>
-				/** = anon
+				/resource/** = anon
+				/unauthorized = anon
+				/login = anon
+				/login/submit = anon
+				/logout = anon
+				/register = anon
+				/register/submit = anon
+				/home = perms[security:home]
+				/changePassword = perms[security:change-password]
 			</value>
 		</property>
 	</bean>
 
 	<!-- 将shiro与spring集合 -->
 	<bean id="shiroSecurityFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-		<!--  
+		<!--
 		<property name="filters">
 			<map>
 				<entry key="captchaAuthc" value-ref="captchaAuthenticationFilter" />
@@ -60,10 +68,12 @@
 		-->
 		<!-- shiro的核心安全接口 -->
 		<property name="securityManager" ref="securityManager" />
-		<!-- 要求登录时的链接 该连接是org.exitsoft.showcase.web.SystemCommonController.login()方法 -->
+		<!-- 要求登录时的链接 该连接是LoginController.login()方法 -->
 		<property name="loginUrl" value="/login" />
-		<!-- 登陆成功后要跳转的连接，该连接是org.exitsoft.showcase.web.SystemCommonController.index()方法 -->
-		<property name="successUrl" value="/" />
+		<!-- 登陆成功后要跳转的连接，该连接是HomeController.getHomePage()方法 -->
+		<property name="successUrl" value="/home" />
+		<!-- 未授权时要跳转的链接 -->
+		<property name="unauthorizedUrl" value="/unauthorized" />
 		<!-- shiro连接约束配置,在这里使用自定义的动态获取资源类 -->
 		<property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" />
 	</bean>

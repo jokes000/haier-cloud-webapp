@@ -8,28 +8,34 @@
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 
 <div class="row">
-	<aside class="span3">
-		<ul class="nav nav-list" id="navlist">
-			<li class="nav-header">用户管理</li>
-			<li><a href="<%=request.getContextPath()%>/admin/user">用户列表</a></li>
-			<li><a href="<%=request.getContextPath()%>/admin/user/add">添加用户</a></li>
-			<li class="nav-header">群组管理</li>
-			<li class="active"><a
-				href="<%=request.getContextPath()%>/admin/group">群组列表</a></li>
-			<li><a href="<%=request.getContextPath()%>/admin/group/add">添加群组</a></li>
-			<li class="nav-header">权限管理</li>
-			<li><a href="<%=request.getContextPath()%>/admin/permission">权限列表</a></li>
-			<li><a href="<%=request.getContextPath()%>/admin/permission/add">添加权限</a></li>
-		</ul>
-	</aside>
-
 	<div class="center">
-		<h3>管理员首页</h3>
+		<h3 class="text-left">群组管理</h3>
+		<hr>
+
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>群组名</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="group" items="${groupsList}">
+					<tr>
+						<td><c:out value="${group.name}" /></td>
+						<td><a class="btn btn-info">查看群组所有权限</a></td>
+						<td><a class="btn btn-danger btn-small">删除</a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+
+		<a class="btn btn-primary pull-left" style="margin-top: 50px"
+			href="<%=request.getContextPath()%>/admin/group/add">添加群组</a>
 	</div>
 </div>
+
 <script type="text/javascript">
-	$('#navlist li').click(function() {
-		$('#navlist li').removeClass('active');
-		$(this).addClass('active');
-	});
+	
 </script>

@@ -54,7 +54,8 @@
 
 <body>
 	<form class="form-horizontal"
-		action="<%=request.getContextPath()%>/login/submit" method="POST">
+		action="<%=request.getContextPath()%>/register/submit"
+		method="POST">
 		<div class="control-group">
 			<label class="control-label" for="inputUsername">用户名</label>
 			<div class="controls">
@@ -68,8 +69,20 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label" for="inputPassword">确认密码</label>
 			<div class="controls">
-				<input type="submit" class="btn btn-primary" value="登陆" />
+				<input type="password" id="confirmPassword" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="inputEmail">email</label>
+			<div class="controls">
+				<input type="text" name="email" id="inputEmail" />
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<input type="submit" class="btn btn-primary" value="注册" />
 			</div>
 		</div>
 	</form>

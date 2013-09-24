@@ -39,7 +39,13 @@ public class UserDaoImpl implements IUserDao {
 
 	
 	public User queryByUserName(String username) {
-		return baseDao.queryByProperty(User.class, "username", username).get(0);
+		List<User> user = baseDao.queryByProperty(User.class, "username", username);
+		
+		if (user.size() == 0) {
+			return null;
+		}
+		
+		return user.get(0);
 	}
 
 	

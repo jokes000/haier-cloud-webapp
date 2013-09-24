@@ -21,6 +21,7 @@ import cn.edu.sjtu.se.dslab.haiercloud.web.entity.Perm;
 import cn.edu.sjtu.se.dslab.haiercloud.web.entity.User;
 import cn.edu.sjtu.se.dslab.haiercloud.web.exception.ServiceException;
 import cn.edu.sjtu.se.dslab.haiercloud.web.service.IAuthService;
+import cn.edu.sjtu.se.dslab.haiercloud.web.util.SpringContextHolder;
 
 /**
  * 帐户管理业务逻辑
@@ -39,10 +40,41 @@ public class AuthServiceImpl implements IAuthService {
 	@Resource(name = "groupDao")
 	private IGroupDao groupDao;
 
+	@Resource(name = "springContextHolder")
+	private SpringContextHolder springContextHolder;
+
 	/**
 	 * shiro 授权缓存key
 	 */
 	private final String ShiroAuthorizationCache = "shiroAuthorizationCache";
+
+	public boolean isAuthenticated() {
+		return SecurityUtils.getSubject().isAuthenticated();
+	}
+
+	public boolean register(User user) {
+
+		if (!isUsernameUnique(user.getUsername())) {
+			return false;
+		}
+
+		String temp = new SimpleHash("MD5", user.getPassword()).toHex();
+		user.setPassword(temp);
+
+		userDao.save(user);
+		return true;
+	}
+
+	public CommonVariableModel getCommonVariableModel() {
+		Subject subject = SecurityUtils.getSubject();
+
+		if (subject != null && subject.getPrincipal() != null
+				&& subject.getPrincipal() instanceof CommonVariableModel) {
+			return (CommonVariableModel) subject.getPrincipal();
+		}
+
+		return null;
+	}
 
 	/**
 	 * 更新当前用户密码
@@ -53,11 +85,13 @@ public class AuthServiceImpl implements IAuthService {
 	public boolean updateUserPassword(String oldPassword, String newPassword) {
 		Subject subject = SecurityUtils.getSubject();
 		User user = null;
-		if (subject != null && subject.getPrincipal() != null && subject.getPrincipal() instanceof CommonVariableModel ) {
-			user = ((CommonVariableModel)subject.getPrincipal()).getUser();
-		}		
-		
-		oldPassword = new SimpleHash("MD5", oldPassword.toCharArray()).toString();
+		if (subject != null && subject.getPrincipal() != null
+				&& subject.getPrincipal() instanceof CommonVariableModel) {
+			user = ((CommonVariableModel) subject.getPrincipal()).getUser();
+		}
+
+		oldPassword = new SimpleHash("MD5", oldPassword.toCharArray())
+				.toString();
 		if (user.getPassword().equals(oldPassword)) {
 			String temp = new SimpleHash("MD5", newPassword).toHex();
 			user.setPassword(temp);
@@ -71,6 +105,10 @@ public class AuthServiceImpl implements IAuthService {
 		return userDao.queryById(id);
 	}
 
+	public List<User> getAllUsers() {
+		return userDao.queryAll();
+	}
+
 	public List<User> getUserByPage(int pageNum, int pageSize) {
 		return userDao.queryByPage(pageNum, pageSize);
 	}
@@ -79,7 +117,7 @@ public class AuthServiceImpl implements IAuthService {
 		if (!isUsernameUnique(user.getUsername())) {
 			throw new ServiceException("用户名已存在");
 		}
-		
+
 		String password = new SimpleHash("MD5", user.getPassword()).toHex();
 		user.setPassword(password);
 		userDao.save(user);
@@ -137,8 +175,8 @@ public class AuthServiceImpl implements IAuthService {
 	public List<Group> getAllGroups() {
 		return groupDao.queryAll();
 	}
-	
-	@CacheEvict(value=ShiroAuthorizationCache,allEntries=true)
+
+	@CacheEvict(value = ShiroAuthorizationCache, allEntries = true)
 	public void saveGroup(Group group) {
 		groupDao.save(group);
 	}
@@ -156,5 +194,4 @@ public class AuthServiceImpl implements IAuthService {
 	public Set<Group> getUserGroups(long userid) {
 		return userDao.queryById(userid).getGroupsList();
 	}
-
 }

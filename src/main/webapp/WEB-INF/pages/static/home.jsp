@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8" isELIgnored="false" %>
+	pageEncoding="utf-8" isELIgnored="false"%>
 <div class="center">
 	<h1>Welcome to Cloud Management Platform.</h1>
-
+	<hr>
 	<div class="container">
 		<div class="row">
 			<div class="span12">
@@ -21,7 +21,8 @@
 					<li class="span4">
 						<div class="thumbnail">
 							<a href="<%=request.getContextPath()%>/vm"><img height="300"
-								width="150" src="<%=request.getContextPath()%>/resource/img/cluster.jpg" /></a>
+								width="150"
+								src="<%=request.getContextPath()%>/resource/img/cluster.jpg" /></a>
 							<div class="caption">
 								<h3>虚拟机管理</h3>
 								<p>管理空闲虚拟机：增加新的虚拟机，删除不需要的虚拟机。</p>
