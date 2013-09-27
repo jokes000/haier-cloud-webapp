@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.edu.sjtu.se.dslab.haiercloud.web.auth.CommonVariableModel;
 import cn.edu.sjtu.se.dslab.haiercloud.web.entity.User;
 import cn.edu.sjtu.se.dslab.haiercloud.web.service.IAuthService;
 

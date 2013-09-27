@@ -14,11 +14,11 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath*:/applicationContext-core.xml,
-			classpath*:/applicationContext-shiro.xml
+			classpath*:/applicationContext-shiro.xml,
+			classpath*:/applicationContext-deploy.xml
 		</param-value>
 	</context-param>
 
-	<!-- filter def -->
 	<!-- character encoding filter -->
 	<filter>
 		<filter-name>springEncoding</filter-name>

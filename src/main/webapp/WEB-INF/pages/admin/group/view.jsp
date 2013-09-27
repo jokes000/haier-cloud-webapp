@@ -7,35 +7,42 @@
 <!-- tiles prefix -->
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 
-<div class="row">
-	<div class="center">
-		<h3 class="text-left">群组管理</h3>
-		<hr>
+<div class="container">
+	<div class="row">
+		<div class="center">
+			<h3 class="text-left">群组管理</h3>
+			<hr>
 
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>群组名</th>
-					<th></th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="group" items="${groupsList}">
+			<table class="table table-hover">
+				<thead>
 					<tr>
-						<td><c:out value="${group.name}" /></td>
-						<td><a class="btn btn-info">查看群组所有权限</a></td>
-						<td><a class="btn btn-danger btn-small">删除</a></td>
+						<th>群组名</th>
+						<th></th>
+						<th></th>
 					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					<c:forEach var="group" items="${groupsList}">
+						<tr>
+							<td><c:out value="${group.name}" /></td>
+							<td><a class="btn btn-info"
+								href="<%=request.getContextPath()%>/admin/group/detail/${group.id}">查看群组所有权限</a></td>
+							<td><a class="btn btn-danger btn-small"
+								href="<%=request.getContextPath()%>/admin/group/delete/${group.id}"
+								onClick="return deleteGroup()">删除</a></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 
-		<a class="btn btn-primary pull-left" style="margin-top: 50px"
-			href="<%=request.getContextPath()%>/admin/group/add">添加群组</a>
+			<a class="btn btn-primary pull-left" style="margin-top: 50px"
+				href="<%=request.getContextPath()%>/admin/group/add">添加群组</a>
+		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
-	
+	function deleteGroup() {
+		return confirm('确定删除？');
+	}
 </script>

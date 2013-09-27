@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- meta info -->
-<meta name="author" content="Huiyi">
+<meta name="author" content="smile">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- end of meta info -->
 
@@ -25,15 +25,6 @@
 <link href="<%=request.getContextPath()%>/resource/css/custom.css" rel="stylesheet"
 	type="text/css" />
 <!-- end of styles -->
-
-<!-- javascripts -->
-<script type="text/javascript" src="<%=request.getContextPath()%>/resource/js/jquery-2.0.3.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/resource/js/bootstrap-switch.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/resource/js/bootstrap-slider.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/resource/js/simple-slider.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/resource/js/simplePagination.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/resource/js/bootstrap.min.js"></script>
-<!-- end of js -->
 
 <!-- Add IE html5 support -->
 <!--[if it IE 9]>

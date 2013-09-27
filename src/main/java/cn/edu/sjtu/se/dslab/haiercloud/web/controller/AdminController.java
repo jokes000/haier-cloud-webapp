@@ -50,6 +50,19 @@ public class AdminController {
 
 		return mav;
 	}
+	
+	@RequestMapping(value = "/admin/group/detail", method = RequestMethod.GET)
+	public ModelAndView groupDetail(@PathVariable(value = "id") long id) {
+		
+		// set view
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/admin/group/detail");
+		
+		// add object
+		mav.addObject("group", authService.getGroup(id));
+		
+		return mav;
+	}
 
 	@RequestMapping(value = "/admin/group/add", method = RequestMethod.GET)
 	public ModelAndView addGroupView() {
@@ -217,9 +230,13 @@ public class AdminController {
 		return "redirect:/admin/permission";
 	}
 
-	@RequestMapping(value = "/admin/permission/delete", method = RequestMethod.GET)
-	public ModelAndView deletePermission() {
+	@RequestMapping(value = "/admin/permission/delete/{id}", method = RequestMethod.GET)
+	public ModelAndView deletePermission(@PathVariable(value = "id") long id) {
 
+		List<Long> temp = new ArrayList<Long>();
+		temp.add(id);
+		authService.deletePerms(temp);
+		
 		return null;
 	}
 
