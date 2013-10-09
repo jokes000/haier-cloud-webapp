@@ -6,6 +6,9 @@
     <definition name="/login" template="/WEB-INF/pages/static/login.jsp" />
     <definition name="/register" template="/WEB-INF/pages/static/register.jsp" />
     -->
+    
+    <definition name="/monitor" template="/WEB-INF/pages/monitor/iframe.html" />
+    
     <definition name="base" template="/WEB-INF/pages/template/template.jsp">
         <put-attribute name="meta" value="/WEB-INF/pages/template/meta.jsp" />
         <put-attribute name="title" value="" />
