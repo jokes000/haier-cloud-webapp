@@ -84,6 +84,7 @@ public class DeployController {
 		mav.setViewName("/deploy/mongodb");
 
 		// add data
+		mav.addObject("vmList", vmService.getVirtualMachineList());
 
 		return mav;
 	}

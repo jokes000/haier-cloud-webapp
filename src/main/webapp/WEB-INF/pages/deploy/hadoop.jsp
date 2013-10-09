@@ -80,7 +80,7 @@
 	</div>
 </div>
 
-<script>
+<script type="text/javascript">
 	$('.radio1').on('switch-change', function() {
 		$('.radio1').bootstrapSwitch('toggleRadioState');
 	});

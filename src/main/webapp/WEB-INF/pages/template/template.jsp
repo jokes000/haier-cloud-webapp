@@ -27,20 +27,6 @@
 	<!-- footer region -->
 	<tiles:insertAttribute name="footer" />
 	<!-- end of footer region -->
-
-	<!-- javascripts -->
-	<script type="text/javascript"
-		src="<%=request.getContextPath()%>/resource/js/jquery-2.0.3.js"></script>
-	<script type="text/javascript"
-		src="<%=request.getContextPath()%>/resource/js/bootstrap-switch.js"></script>
-	<script type="text/javascript"
-		src="<%=request.getContextPath()%>/resource/js/bootstrap-slider.js"></script>
-	<script type="text/javascript"
-		src="<%=request.getContextPath()%>/resource/js/simple-slider.js"></script>
-	<script type="text/javascript"
-		src="<%=request.getContextPath()%>/resource/js/simplePagination.js"></script>
-	<script type="text/javascript"
-		src="<%=request.getContextPath()%>/resource/js/bootstrap.min.js"></script>
-	<!-- end of js -->
+	
 </body>
 </html>
