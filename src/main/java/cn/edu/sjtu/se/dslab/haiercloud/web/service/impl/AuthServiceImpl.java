@@ -21,7 +21,6 @@ import cn.edu.sjtu.se.dslab.haiercloud.web.entity.Perm;
 import cn.edu.sjtu.se.dslab.haiercloud.web.entity.User;
 import cn.edu.sjtu.se.dslab.haiercloud.web.exception.ServiceException;
 import cn.edu.sjtu.se.dslab.haiercloud.web.service.IAuthService;
-import cn.edu.sjtu.se.dslab.haiercloud.web.util.SpringContextHolder;
 
 /**
  * 帐户管理业务逻辑
@@ -39,9 +38,6 @@ public class AuthServiceImpl implements IAuthService {
 	private IPermDao permDao;
 	@Resource(name = "groupDao")
 	private IGroupDao groupDao;
-
-	@Resource(name = "springContextHolder")
-	private SpringContextHolder springContextHolder;
 
 	/**
 	 * shiro 授权缓存key

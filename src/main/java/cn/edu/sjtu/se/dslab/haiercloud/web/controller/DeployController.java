@@ -89,6 +89,20 @@ public class DeployController {
 		return mav;
 	}
 
+	@RequestMapping(value = "/mongodb/submit", method = RequestMethod.POST)
+	public ModelAndView submitMongoDB(@RequestParam long[] configserver,
+			@RequestParam long[] mongos, @RequestParam long[] shard1,
+			@RequestParam long[] shard2, @RequestParam String clusterName) {
+		// configure redirect
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/deploy/submit");
+		
+		// process
+		dcService.deployMongoDBCluster(configserver, mongos, shard1, shard2, clusterName);
+
+		return mav;
+	}
+
 	@RequestMapping(value = "/mysql", method = RequestMethod.GET)
 	public ModelAndView deployMySQL() {
 		// configure redirect

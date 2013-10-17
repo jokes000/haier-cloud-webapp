@@ -40,7 +40,7 @@ public class NodeMeta implements java.io.Serializable {
     @ManyToOne
     @JoinColumn(name = "meta_id")
     private ClusterMeta meta;
-    @OneToMany(cascade = { CascadeType.REFRESH }, mappedBy = "meta")
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "meta")
     private List<Node> nodes;
 
     /* end of properties */

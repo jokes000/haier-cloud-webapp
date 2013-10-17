@@ -19,7 +19,7 @@
 						<div class="thumbnail">
 							<a href="<%=request.getContextPath()%>/${item.name}_status"><img
 								width="300" height="180"
-								src="<%=request.getContextPath()%>/img/${item.meta.name}.jpg" /></a>
+								src="<%=request.getContextPath()%>/resource/img/${item.meta.name}.jpg" /></a>
 							<div class="caption">
 								<h3>${item.name}</h3>
 								<p>${item.meta.name }集群，目前有${fn:length(item.vms) }台机器。</p>

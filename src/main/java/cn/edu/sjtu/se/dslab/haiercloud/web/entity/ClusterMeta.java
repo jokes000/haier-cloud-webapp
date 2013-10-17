@@ -29,7 +29,7 @@ public class ClusterMeta implements java.io.Serializable {
 	private long id;
 	@Column(name="name", nullable = false, length = 32)
 	private String name;
-	@OneToMany(cascade = {CascadeType.REFRESH}, mappedBy="meta")
+	@OneToMany(cascade = {CascadeType.ALL}, mappedBy="meta")
 	private List<NodeMeta> nodes;
 
 	// Constructor

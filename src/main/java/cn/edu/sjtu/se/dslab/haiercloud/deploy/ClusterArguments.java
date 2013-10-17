@@ -7,16 +7,6 @@ public class ClusterArguments {
 	String masterIP;
 	String secondaryNameNodeIP;
 	HashMap<String,String> hm;
-		
-	public ClusterArguments() {}
-	
-	public ClusterArguments(String clusterName, String masterIP,
-			HashMap<String, String> hm) {
-		this.clusterName = clusterName;
-		this.masterIP = masterIP;
-		this.hm = hm;
-	}
-	
 	public String getClusterName() {
 		return clusterName;
 	}

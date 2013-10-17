@@ -7,17 +7,14 @@
 package cn.edu.sjtu.se.dslab.haiercloud.web.service;
 
 public interface IDeployClusterService {
-	
-	public void deployHadoopCluster(long namenode,
-															 long[] snnList,
-															 long[] dnList,
-															 long jobtracker,
-															 long[] ttList,
-															 String clusterName);
-	
+
+	public void deployHadoopCluster(long namenode, long[] snnList,
+			long[] dnList, long jobtracker, long[] ttList, String clusterName);
+
 	public void addNodesToHadoopCluster(long clusterId, long[] vms);
-	
-	public void deployMongoDBCluster();
-	
+
+	public void deployMongoDBCluster(long[] configserver, long[] mongos,
+			long[] shard1, long[] shard2, String clusterName);
+
 	public void deployMySQLCluster();
 }

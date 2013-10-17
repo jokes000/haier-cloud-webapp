@@ -44,8 +44,8 @@ public class Cluster implements java.io.Serializable {
     @ManyToOne
     @JoinColumn(name = "meta_id")
     private ClusterMeta meta;
-    @Fetch( FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "cluster", cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+    @Fetch( FetchMode.SUBSELECT)
     private Set<VirtualMachine> vms;
     /* end of properties */
     

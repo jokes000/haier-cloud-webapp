@@ -16,7 +16,7 @@
 	<br>
 
 	<div class="row">
-		<form action="<%=request.getContextPath()%>/deploy/hadoop/submit"
+		<form action="<%=request.getContextPath()%>/deploy/mongodb/submit"
 			method="POST" onsubmit="return valid()">
 			<!-- table start -->
 			<table class="table table-hover table-bordered">
@@ -31,6 +31,7 @@
 						<th width="80px">config&nbsp;server</th>
 						<th width="80px">mongos</th>
 						<th width="80px">shard-1</th>
+						<th width="80px">shard-2</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -43,13 +44,16 @@
 							<td><c:out value="${vm.storage}G" /></td>
 							<td><c:out value="${vm.boardWidth}Mbps" /></td>
 							<td><div class="make-switch switch-small">
-									<input type="radio" name="configserver" value="${vm.id}">
+									<input type="checkbox" name="configserver" value="${vm.id}">
 								</div></td>
 							<td><div class="make-switch switch-small">
 									<input type="checkbox" name="mongos" value="${vm.id}" />
 								</div></td>
 							<td><div class="make-switch switch-small">
-									<input type="checkbox" name="shard-1" value="${vm.id}" />
+									<input type="checkbox" name="shard1" value="${vm.id}" />
+								</div></td>
+							<td><div class="make-switch switch-small">
+									<input type="checkbox" name="shard2" value="${vm.id}" />
 								</div></td>
 						</tr>
 					</c:forEach>
@@ -61,29 +65,32 @@
 			<button class="btn btn-warning pull-right">重置</button>
 			<input type="submit" class="btn btn-primary pull-right"
 				style="margin-right: 10px" value="确定" />
+			<!--  
 			<button class="btn btn-info pull-right" style="margin-right: 10px"
 				onclick="addShard()">添加Shard</button>
+			-->
 			<input type="text" class="pull-right" style="margin-right: 10px"
 				placeholder="集群名称" name="clusterName" />
 		</form>
 	</div>
-</div>
+</div>*
 
 <script type="text/javascript">
 	var index = 2;
-
-	$('.radio1').on('switch-change', function() {
-		$('.radio1').bootstrapSwitch('toggleRadioState');
-	});
+	var vms = ${vmList};
 	
 	function addShard() {
 		$('#tb-header').append("<th width='80px'>shard-" + index + "</th>");
-		$('.tb-body')
-				.append(
-						"<td><div class='make-switch switch-small'><input type='checkbox' name='shard-" + index + "' value='" + ${vm.id} + "' /></div></td>");
-		index++;
 		
-		$('.make-switch')['bootstrapSwitch']();
+		//$('.tb-body')
+		//.append("<td><input type='checkbox' name='shard-" + index + "' /></td>");	
+		
+		$('.tb-body')
+				.append("<td><div class='shard-" + index + " make-switch switch-small'>" + 
+						"<input type='checkbox' name='shard-" + index + "' />" +
+						"</div></td>");		
+		$(".shard-" + index + ".make-switch")['bootstrapSwitch']();
+		index++;
 	}
 	
 	function valid() {

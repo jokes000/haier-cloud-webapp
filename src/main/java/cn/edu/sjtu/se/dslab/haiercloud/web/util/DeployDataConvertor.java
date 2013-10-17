@@ -46,7 +46,7 @@ public class DeployDataConvertor {
 		 */
 		Cluster cluster = new Cluster();
 		// clustermeta
-		ClusterMeta meta = cmService.getClusterMetaByName("Hadoop");
+		ClusterMeta meta = cmService.getClusterMetaByName("hadoop");
 		cluster.setMeta(meta);
 		// name
 		cluster.setName(clusterName);
@@ -65,23 +65,23 @@ public class DeployDataConvertor {
 		}
 		// get vms from database
 		Set<VirtualMachine> vmSet = new HashSet<VirtualMachine>();
-		NodeMeta nnMeta = nmService.getNodeMetaByName("NameNode");
-		NodeMeta dnMeta = nmService.getNodeMetaByName("DataNode");
-		NodeMeta jtMeta = nmService.getNodeMetaByName("JobTracker");
-		NodeMeta snnMeta = nmService.getNodeMetaByName("SecondaryNameNode");
+		NodeMeta nnMeta = nmService.getNodeMetaByName("namenode");
+		NodeMeta dnMeta = nmService.getNodeMetaByName("datanode");
+		NodeMeta jtMeta = nmService.getNodeMetaByName("jobtracker");
+		NodeMeta snnMeta = nmService.getNodeMetaByName("secondarynamenode");
 
 		for (long id : vms) {
 			VirtualMachine vm = vmService.getVirtualMachineById(id);
 			Set<Node> nodes = new HashSet<Node>();
 			// add corresponding nodes
 			if (id == namenode) {
-				Node nn = new Node(clusterName + "_NameNode", 9000, nnMeta, vm);
+				Node nn = new Node(clusterName + "_nameNode", 9000, nnMeta, vm);
 				nodes.add(nn);
 				nodeService.addNode(nn);
 			}
 
 			if (id == jobtracker) {
-				Node jt = new Node(clusterName + "_JobTracker", 9001, jtMeta,
+				Node jt = new Node(clusterName + "_jobTracker", 9001, jtMeta,
 						vm);
 				nodes.add(jt);
 				nodeService.addNode(jt);
@@ -89,7 +89,7 @@ public class DeployDataConvertor {
 
 			for (long snnId : snnList) {
 				if (snnId == id) {
-					Node snn = new Node(clusterName + "_SecondaryNameNode",
+					Node snn = new Node(clusterName + "_secondarynamenode",
 							50090, snnMeta, vm);
 					nodes.add(snn);
 					nodeService.addNode(snn);
@@ -98,7 +98,7 @@ public class DeployDataConvertor {
 
 			for (long dnId : dnList) {
 				if (dnId == id) {
-					Node dn = new Node(clusterName + "_DataNode", 50010,
+					Node dn = new Node(clusterName + "_datanode", 50010,
 							dnMeta, vm);
 					nodes.add(dn);
 					nodeService.addNode(dn);
@@ -107,6 +107,7 @@ public class DeployDataConvertor {
 
 			vm.setNodes(nodes);
 			vm.setCluster(cluster);
+			vmService.updateVirtualMachine(vm);
 			vmSet.add(vm);
 		}
 

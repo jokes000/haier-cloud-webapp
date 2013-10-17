@@ -1,7 +1,5 @@
 package cn.edu.sjtu.se.dslab.haiercloud.deploy;
 
-import java.util.HashMap;
-
 public interface DeployCluster {
 
 	public boolean addCluster(ClusterArguments clusterArgs);

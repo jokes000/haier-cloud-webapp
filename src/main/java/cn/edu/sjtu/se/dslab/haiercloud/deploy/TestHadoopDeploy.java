@@ -5,27 +5,28 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class Test {
+public class TestHadoopDeploy {
 	
 	public static void main(String[] args) {
 		
-		String masterIP="192.168.1.114";
+		String masterIP="192.168.1.250";
 		String masterPassword="111111";
-		String nodeIP="192.168.1.184";
+		String nodeIP="192.168.1.249";
 		String nodePassword="111111";
-		String node2IP="192.168.1.185";
+		String node2IP="192.168.1.248";
 		String node2Password="111111";
 		HashMap<String, String> hm=new HashMap<String,String>();
 		
 		hm.put(masterIP, masterPassword);
 		hm.put(nodeIP, nodePassword);
+		hm.put(node2IP, node2Password);
 		ClusterArguments argus=new ClusterArguments();
-		argus.setClusterName("sjtu");
+		argus.setClusterName("myHadoop");
 		argus.setMasterIP(masterIP);
 		argus.setHm(hm);
-		//new DeployHadoopCluster().addCluster(argus);
+	//	new DeployHadoopCluster().addCluster(argus);
 		
-		new DeployHadoopCluster().deleteCluster(argus);
+		//new DeployHadoopCluster().deleteCluster(argus);
 		/*hm.put(masterIP, masterPassword);
 		hm.put(nodeIP, nodePassword);
 		hm.put(node2IP, node2Password);
