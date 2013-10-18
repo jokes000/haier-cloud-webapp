@@ -20,68 +20,79 @@ import javax.persistence.Table;
 @Table(name = "TB_NODE")
 public class Node implements java.io.Serializable {
 
-    private static final long serialVersionUID = 5185272712366834262L;
+	private static final long serialVersionUID = 5185272712366834262L;
 
-    // Constructor
-    public Node() {
-    }
-    
-    public Node(String name, int port, NodeMeta meta, VirtualMachine vm) {
-    	this.name = name;
-    	this.port = port;
-    	this.meta = meta;
-    	this.vm = vm;
-    }
+	// Constructor
+	public Node() {
+	}
 
-    /* properties */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(name = "name", nullable = false)
-    private String name;
-    @Column(name = "port", nullable = false)
-    private int port;
-    @ManyToOne
-    @JoinColumn(name = "meta_id")
-    private NodeMeta meta;
-    @ManyToOne(cascade = { CascadeType.ALL })
-    @JoinColumn(name = "vm_id")
-    private VirtualMachine vm;
-    /* end of properties */
+	public Node(String name, int port, NodeMeta meta, VirtualMachine vm) {
+		this.name = name;
+		this.port = port;
+		this.meta = meta;
+		this.vm = vm;
+	}
 
-    /* getter and setters */
-    public long getId() {
-        return id;
-    }
+	/* properties */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	@Column(name = "name", nullable = false)
+	private String name;
+	@Column(name = "port", nullable = false)
+	private int port;
+	@Column(name = "parent")
+	private Node parent;
+	@ManyToOne
+	@JoinColumn(name = "meta_id")
+	private NodeMeta meta;
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "vm_id")
+	private VirtualMachine vm;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	/* end of properties */
 
-    public String getName() {
-        return name;
-    }
+	/* getter and setters */
+	public long getId() {
+		return id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public int getPort() {
-        return port;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setPort(int port) {
-        this.port = port;
-    }
-    
-    public NodeMeta getMeta() {
-        return meta;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setMeta(NodeMeta meta) {
-        this.meta = meta;
-    }
-   
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public Node getParent() {
+		return parent;
+	}
+
+	public void setParent(Node parent) {
+		this.parent = parent;
+	}
+
+	public NodeMeta getMeta() {
+		return meta;
+	}
+
+	public void setMeta(NodeMeta meta) {
+		this.meta = meta;
+	}
+	
 	public VirtualMachine getVm() {
 		return vm;
 	}
@@ -90,6 +101,6 @@ public class Node implements java.io.Serializable {
 		this.vm = vm;
 	}
 	/* end of getter and setters */
-    /* Serializable interfaces */
-    /* end of Serializable interfaces */
+	/* Serializable interfaces */
+	/* end of Serializable interfaces */
 }

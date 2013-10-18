@@ -6,6 +6,7 @@
  */
 package cn.edu.sjtu.se.dslab.haiercloud.web.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.sjtu.se.dslab.haiercloud.web.dao.IClusterDao;
 import cn.edu.sjtu.se.dslab.haiercloud.web.entity.Cluster;
+import cn.edu.sjtu.se.dslab.haiercloud.web.entity.Node;
+import cn.edu.sjtu.se.dslab.haiercloud.web.entity.VirtualMachine;
 import cn.edu.sjtu.se.dslab.haiercloud.web.service.IClusterService;
 
 @Service("clusterService")
@@ -52,5 +55,44 @@ public class ClusterServiceImpl implements IClusterService {
 
 	public List<Cluster> getByPage(int pageNum, int pageSize) {
 		return dao.queryByPage(pageNum, pageSize);
+	}
+	
+	public List<VirtualMachine> getVms(Cluster cluster) {
+		List<VirtualMachine> vmList = new ArrayList<VirtualMachine>();
+		
+		if (cluster.getMeta().getName().equals("hadoop")) {
+			vmList = getHadoopVms(cluster);
+		} else if (cluster.getMeta().getName().equals("mongodb")) {
+			vmList = getMongoDBVms(cluster);
+		} else {
+			
+		}
+		
+		
+		return vmList;
+	}
+	
+	private List<VirtualMachine> getHadoopVms(Cluster cluster) {
+		List<VirtualMachine> hadoopList = new ArrayList<VirtualMachine>();
+		VirtualMachine nn;
+		VirtualMachine[] dn;
+		VirtualMachine[] snn;
+		VirtualMachine jt;
+		VirtualMachine[] tt;
+		
+		for (VirtualMachine vm : cluster.getVms()) {
+			for (Node node : vm.getNodes()) {
+				
+			}
+		}
+		
+		
+		return hadoopList;
+	}
+	
+	private List<VirtualMachine> getMongoDBVms(Cluster cluster) {
+		List<VirtualMachine> mongodbList = new ArrayList<VirtualMachine>();
+		
+		return mongodbList;
 	}
 }

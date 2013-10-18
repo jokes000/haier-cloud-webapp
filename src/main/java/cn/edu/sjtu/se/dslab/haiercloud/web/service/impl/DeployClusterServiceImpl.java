@@ -272,17 +272,32 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 				}
 			}
 			
+			int count = 0;
+			Node parent = null;
 			for (long mongod : shard1) {
 				if (mongod == id) {
 					Node md = new Node(clusterName + "_mongod", 27017, mdMeta, vm);
+					if (count++ == 0) {
+						md.setParent(md);
+						parent = md;
+					} else {
+						md.setParent(parent);
+					}
 					nodes.add(md);
 					nodeService.addNode(md);
 				}
 			}
 			
+			count = 0;
 			for (long mongod : shard2) {
 				if (mongod == id) {
 					Node md = new Node(clusterName + "_mongod", 27017, mdMeta, vm);
+					if (count++ == 0) {
+						md.setParent(md);
+						parent = md;
+					} else {
+						md.setParent(parent);
+					}
 					nodes.add(md);
 					nodeService.addNode(md);
 				}
