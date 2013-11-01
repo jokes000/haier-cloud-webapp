@@ -28,6 +28,10 @@ public class ClusterServiceImpl implements IClusterService {
 	@Resource(name = "clusterDao")
 	private IClusterDao dao;
 
+	public IClusterDao getDao() {
+		return dao;
+	}
+
 	// implemented methods
 	public void addCluster(Cluster cluster) {
 		dao.save(cluster);

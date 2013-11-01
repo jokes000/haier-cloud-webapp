@@ -42,7 +42,7 @@ public class ClusterController {
 			Set<VirtualMachine> dn = new HashSet<VirtualMachine>();
 
 			for (VirtualMachine vm : cluster.getVms()) {
-
+				
 				for (Node node : vm.getNodes()) {
 					String meta = node.getMeta().getName();
 					if (meta.equals("namenode")) {
