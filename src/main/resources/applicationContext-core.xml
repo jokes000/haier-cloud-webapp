@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
 	http://www.springframework.org/schema/tx 
@@ -12,7 +15,9 @@
 	http://www.springframework.org/schema/aop 
 	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
 	http://www.springframework.org/schema/cache 
-	http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
+	http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
 	<description>Spring public configuration</description>
 
@@ -25,9 +30,10 @@
 
 	<!-- use annotation to auto register bean, and make sure @Required, @Autowired 
 		bean to be injected -->
-	<context:component-scan base-package="cn.edu.sjtu.se.dslab.haiercloud">
-		
-	</context:component-scan>
+	<context:component-scan base-package="cn.edu.sjtu.se.dslab.haiercloud"></context:component-scan>
+
+	<!-- Asynchronous support -->
+	<task:annotation-driven />
 
 	<!-- database configuration -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -55,9 +61,8 @@
 				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
 			</props>
 		</property>
-		<!--  
-		<property name="packagesToScan" value="cn.edu.sjtu.se.dslab.haiercloud.web.entity" />
-		-->
+		<!-- <property name="packagesToScan" value="cn.edu.sjtu.se.dslab.haiercloud.web.entity" 
+			/> -->
 	</bean>
 
 	<!-- transaction support -->

@@ -379,8 +379,8 @@ public class DeployHadoopCluster implements DeployCluster {
 	}
 
 	// 增加hadoop集群
-	@Async
 	public boolean addCluster(ClusterArguments clusterArgs) {
+
 
 		// 初始化 １、建立日志文件
 		init(clusterArgs);
@@ -409,12 +409,9 @@ public class DeployHadoopCluster implements DeployCluster {
 
 		// 9、并行检测各节点是否正常启动
 		boolean flag = parallelCheckClusterStatus();
-		/*
-		 * output("Finished!"+"\n"); try{ logWriter.flush(); logWriter.close();
-		 * }catch(Exception e){ e.printStackTrace(); }
-		 */
 
 		return flag;
+
 	}
 
 	private void getMasterPubRsa() {

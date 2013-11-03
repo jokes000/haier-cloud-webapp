@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.sjtu.se.dslab.haiercloud.deploy.ClusterArguments;
+import cn.edu.sjtu.se.dslab.haiercloud.deploy.DeployCluster;
 import cn.edu.sjtu.se.dslab.haiercloud.deploy.DeployHadoopCluster;
 import cn.edu.sjtu.se.dslab.haiercloud.deploy.DeployMongoDBCluster;
 import cn.edu.sjtu.se.dslab.haiercloud.deploy.MongoDBArguments;
@@ -41,7 +42,7 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 	IVirtualMachineService vmService;
 
 	@Resource(name = "deployHadoopCluster")
-	DeployHadoopCluster dhc;
+	DeployCluster dhc;
 
 	@Resource(name = "deployMongodbCluster")
 	DeployMongoDBCluster dmc;
@@ -57,9 +58,6 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 
 	@Resource(name = "nodeService")
 	INodeService nodeService;
-
-	// @Resource(name = "convertor")
-	// DeployDataConvertor convertor;
 
 	@Resource(name = "virtualMachineDao")
 	IVirtualMachineDao vmDao;
@@ -159,14 +157,6 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 		ca.setSecondaryNameNodeIP(master.getIp());
 		ca.setHm(nodeMap);
 
-		/*
-		 * Properties pt = new Properties();
-		 * 
-		 * InputStream in = getClass().getResourceAsStream(
-		 * "/WEB-INF/classes/hadoop.properties"); try { pt.load(in); } catch
-		 * (IOException ioe) { ioe.printStackTrace(); }
-		 */
-
 		boolean ret = dhc.addCluster(ca);
 
 		// success or fail process
@@ -181,7 +171,6 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 			cluster.setStatus(VirtualMachine.ERROR);
 			clusterService.updateCluster(cluster);
 		}
-
 		// update database
 	}
 
