@@ -1,141 +1,228 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-    
-    <!--  
-    <definition name="/login" template="/WEB-INF/pages/static/login.jsp" />
-    <definition name="/register" template="/WEB-INF/pages/static/register.jsp" />
-    -->
-    
-    <definition name="/monitor" template="/WEB-INF/pages/monitor/iframe.html" />
-    
-    <definition name="base" template="/WEB-INF/pages/template/template.jsp">
-        <put-attribute name="meta" value="/WEB-INF/pages/template/meta.jsp" />
-        <put-attribute name="title" value="" />
-        <put-attribute name="header" value="/WEB-INF/pages/template/header.jsp" />
-        <put-attribute name="body" value="" />
-        <put-attribute name="footer" value="/WEB-INF/pages/template/footer.jsp" />
-    </definition>
-    
-    <!-- Home page -->
-    <definition name="/home" extends="base">
-    	<put-attribute name="title" value="欢迎来到CloudManagementPlatform" />
-        <put-attribute name="body" value="/WEB-INF/pages/static/home.jsp" />
-    </definition>
-    
-    <definition name="/login" extends="base">
-    	<put-attribute name="title" value="登陆" />
-    	<put-attribute name="body" value="/WEB-INF/pages/static/login.jsp" />
-    </definition>
-    
-    <definition name="/register" extends="base">
-    	<put-attribute name="title" value="注册" />
-    	<put-attribute name="body" value="/WEB-INF/pages/static/register.jsp" />
-    </definition>
-    
-    <definition name="/deploy" extends="base">
-    	<put-attribute name="title" value="集群部署页面" />
-    	<put-attribute name="body" value="/WEB-INF/pages/deploy/deploy.jsp" />
-    </definition>
-    
-    <definition name="/cluster" extends="base">
-    	<put-attribute name="title" value="集群管理页面" />
-    	<put-attribute name="body" value="/WEB-INF/pages/cluster/cluster.jsp" />
-    </definition>
-    
-    <definition name="/vm" extends="base">
-    	<put-attribute name="title" value="虚拟机管理页面" />
-    	<put-attribute name="body" value="/WEB-INF/pages/vm/vm.jsp" />
-    </definition>
-    
-    <definition name="/unauthorized" extends="base">
-    	<put-attribute name="title" value="未授权" />
-    	<put-attribute name="body" value="/WEB-INF/pages/static/unauthorized.jsp" />
-    </definition>
-    <!-- end of Home page -->
-    
-    <!-- /account -->
-    <definition name="/account" extends="base">
-    	<put-attribute name="title" value="个人管理" />
-    	<put-attribute name="body" value="/WEB-INF/pages/account/view.jsp" />
-    </definition>
-    
-    <!-- /deploy -->
-    <definition name="/deploy/hadoop" extends="base">
-    	<put-attribute name="title" value="hadoop部署" />
-    	<put-attribute name="body" value="/WEB-INF/pages/deploy/hadoop.jsp" />
-    </definition>
-    
-    <definition name="/deploy/mongodb" extends="base">
-    	<put-attribute name="title" value="mongodb部署" />
-    	<put-attribute name="body" value="/WEB-INF/pages/deploy/mongodb.jsp" />
-    </definition>
-    
+
+	<!-- <definition name="/login" template="/WEB-INF/pages/static/login.jsp" 
+		/> <definition name="/register" template="/WEB-INF/pages/static/register.jsp" 
+		/> -->
+
+	<definition name="/monitor" template="/WEB-INF/pages/monitor/iframe.html" />
+
+	<definition name="base" template="/WEB-INF/pages/template/template.jsp">
+		<put-attribute name="meta" value="/WEB-INF/pages/template/meta.jsp" />
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/pages/template/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/pages/template/footer.jsp" />
+	</definition>
+
+	<!-- Home page -->
+	<definition name="/home" extends="base">
+		<put-attribute name="title" value="欢迎来到CloudManagementPlatform" />
+		<put-attribute name="body" value="/WEB-INF/pages/static/home.jsp" />
+	</definition>
+
+	<definition name="/login" extends="base">
+		<put-attribute name="title" value="登陆" />
+		<put-attribute name="body" value="/WEB-INF/pages/static/login.jsp" />
+	</definition>
+
+	<definition name="/register" extends="base">
+		<put-attribute name="title" value="注册" />
+		<put-attribute name="body" value="/WEB-INF/pages/static/register.jsp" />
+	</definition>
+
+	<definition name="/deploy" extends="base">
+		<put-attribute name="title" value="集群部署页面" />
+		<put-attribute name="body" value="/WEB-INF/pages/deploy/deploy.jsp" />
+	</definition>
+
+	<definition name="/cluster" extends="base">
+		<put-attribute name="title" value="集群管理页面" />
+		<put-attribute name="body" value="/WEB-INF/pages/cluster/cluster.jsp" />
+	</definition>
+
+	<definition name="/vm" extends="base">
+		<put-attribute name="title" value="虚拟机管理页面" />
+		<put-attribute name="body" value="/WEB-INF/pages/vm/vm.jsp" />
+	</definition>
+
+	<definition name="/unauthorized" extends="base">
+		<put-attribute name="title" value="未授权" />
+		<put-attribute name="body"
+			value="/WEB-INF/pages/static/unauthorized.jsp" />
+	</definition>
+	<!-- end of Home page -->
+
+	<!-- /account -->
+	<definition name="/account" extends="base">
+		<put-attribute name="title" value="个人管理" />
+		<put-attribute name="body" value="/WEB-INF/pages/account/view.jsp" />
+	</definition>
+
+	<!-- /deploy -->
+	<definition name="/deploy/hadoop" extends="base">
+		<put-attribute name="title" value="hadoop部署" />
+		<put-attribute name="body" value="/WEB-INF/pages/deploy/hadoop.jsp" />
+	</definition>
+
+	<definition name="/deploy/mongodb" extends="base">
+		<put-attribute name="title" value="mongodb部署" />
+		<put-attribute name="body" value="/WEB-INF/pages/deploy/mongodb.jsp" />
+	</definition>
+
 	<definition name="/deploy/mysql" extends="base">
 		<put-attribute name="title" value="mysql部署" />
 		<put-attribute name="body" value="/WEB-INF/pages/deploy/mysql.jsp" />
 	</definition>
-    
-    <definition name="/deploy/submit" extends="base">
-    	<put-attribute name="title" value="集群正在部署.." />
-    	<put-attribute name="body" value="/WEB-INF/pages/deploy/submit.jsp" />
-    </definition>
-    <!-- end of /deploy -->
-    
-    <!-- /vm -->
-    <definition name="/vm/add" extends="base">
+
+	<definition name="/deploy/submit" extends="base">
+		<put-attribute name="title" value="集群正在部署.." />
+		<put-attribute name="body" value="/WEB-INF/pages/deploy/submit.jsp" />
+	</definition>
+	<!-- end of /deploy -->
+
+	<!-- /vm -->
+	<definition name="/vm/add" extends="base">
 		<put-attribute name="title" value="申请虚拟机" />
 		<put-attribute name="body" value="/WEB-INF/pages/vm/add.jsp" />
-    </definition>
-    <!-- end of /vm -->
-    
-    <!-- /cluster -->
-    <definition name="/cluster/modify/hadoop" extends="base">
-    	<put-attribute name="title" value="修改集群" />
-    	<put-attribute name="body" value="/WEB-INF/pages/cluster/modify/hadoop.jsp" />
-    </definition>
-    <!-- end of /cluster -->
-    
-    <!-- /admin -->
-    <definition name="/admin" extends="base">
-    	<put-attribute name="title" value="管理员主页" />
-    	<put-attribute name="body" value="/WEB-INF/pages/admin/home.jsp" />
-    </definition>
-    
-    <definition name="/admin/group" extends="base">
-    	<put-attribute name="title" value="群组列表" />
-    	<put-attribute name="body" value="/WEB-INF/pages/admin/group/view.jsp" />
-    </definition>
-    
-    <definition name="/admin/group/detail" extends="base">
-    	<put-attribute name="title" value="群组详细信息" />
-    	<put-attribute name="body" value="/WEB-INF/pages/admin/group/detail.jsp" />
-    </definition>
-    
-    <definition name="/admin/group/add" extends="base">
-    	<put-attribute name="title" value="添加群组" />
-    	<put-attribute name="body" value="/WEB-INF/pages/admin/group/add.jsp" />
-    </definition>
-    
-    <definition name="/admin/user" extends="base">
-    	<put-attribute name="title" value="用户列表" />
-    	<put-attribute name="body" value="/WEB-INF/pages/admin/user/view.jsp" />
-    </definition>
-    
-    <definition name="/admin/user/detail" extends="base">
-    	<put-attribute name="title" value="用户信息" />
-    	<put-attribute name="body" value="/WEB-INF/pages/admin/user/detail.jsp" />
-    </definition>
-    
-    <definition name="/admin/permission" extends="base">
-    	<put-attribute name="title" value="权限列表" />
-    	<put-attribute name="body" value="/WEB-INF/pages/admin/permission/view.jsp" />
-    </definition>
-    
-    <definition name="/admin/permission/add" extends="base">
-    	<put-attribute name="title" value="添加权限" />
-    	<put-attribute name="body" value="/WEB-INF/pages/admin/permission/add.jsp" />
-    </definition>
-    <!-- end of /admin -->
+	</definition>
+	<!-- end of /vm -->
+
+	<!-- /cluster -->
+	<definition name="/cluster/modify/hadoop" extends="base">
+		<put-attribute name="title" value="修改集群" />
+		<put-attribute name="body"
+			value="/WEB-INF/pages/cluster/modify/hadoop.jsp" />
+	</definition>
+	<!-- end of /cluster -->
+
+	<!-- /admin -->
+	<definition name="/admin" extends="base">
+		<put-attribute name="title" value="管理员主页" />
+		<put-attribute name="body" value="/WEB-INF/pages/admin/home.jsp" />
+	</definition>
+
+	<definition name="/admin/group" extends="base">
+		<put-attribute name="title" value="群组列表" />
+		<put-attribute name="body"
+			value="/WEB-INF/pages/admin/group/view.jsp" />
+	</definition>
+
+	<definition name="/admin/group/detail" extends="base">
+		<put-attribute name="title" value="群组详细信息" />
+		<put-attribute name="body"
+			value="/WEB-INF/pages/admin/group/detail.jsp" />
+	</definition>
+
+	<definition name="/admin/group/add" extends="base">
+		<put-attribute name="title" value="添加群组" />
+		<put-attribute name="body" value="/WEB-INF/pages/admin/group/add.jsp" />
+	</definition>
+
+	<definition name="/admin/user" extends="base">
+		<put-attribute name="title" value="用户列表" />
+		<put-attribute name="body" value="/WEB-INF/pages/admin/user/view.jsp" />
+	</definition>
+
+	<definition name="/admin/user/detail" extends="base">
+		<put-attribute name="title" value="用户信息" />
+		<put-attribute name="body"
+			value="/WEB-INF/pages/admin/user/detail.jsp" />
+	</definition>
+
+	<definition name="/admin/permission" extends="base">
+		<put-attribute name="title" value="权限列表" />
+		<put-attribute name="body"
+			value="/WEB-INF/pages/admin/permission/view.jsp" />
+	</definition>
+
+	<definition name="/admin/permission/add" extends="base">
+		<put-attribute name="title" value="添加权限" />
+		<put-attribute name="body"
+			value="/WEB-INF/pages/admin/permission/add.jsp" />
+	</definition>
+	<!-- end of /admin -->
+
+
+	<!-- MetaData -->
+	<definition name="metabase" template="/WEB-INF/pages/template/base.jsp">
+		<put-attribute name="meta" value="/WEB-INF/pages/layouts/meta.jsp" />
+		<put-attribute name="navi" value="/WEB-INF/pages/layouts/navi.jsp" />
+		<put-attribute name="side" value="/WEB-INF/pages/layouts/side.jsp" />
+		<put-attribute name="body" value="/WEB-INF/pages/layouts/body.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/pages/layouts/footer.jsp" />
+	</definition>
+
+	<definition name="metadata/datastore" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/access/datastore.jsp" />
+	</definition>
+	<definition name="metadata/datastore/create" extends="metabase">
+		<put-attribute name="body" value="/WEB-INF/pages/access/sql.jsp" />
+	</definition>
+	<definition name="metadata/dbmeta" extends="metabase">
+		<put-attribute name="body" value="/WEB-INF/pages/access/dbmeta.jsp" />
+	</definition>
+	<definition name="metadata/tablemeta" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/access/tablemeta.jsp" />
+	</definition>
+	<definition name="metadata/tablemeta/create" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/access/tablemeta.jsp" />
+	</definition>
+	<definition name="metadata/tablemeta/del" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/access/tablemeta.jsp" />
+	</definition>
+	<definition name="metadata/columnmeta" extends="base">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/access/columnmeta.jsp" />
+	</definition>
+	<definition name="metadata/columnmeta/edit" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/access/columnmeta.jsp" />
+	</definition>
+	<definition name="metadata/columnmeta/del" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/access/columnmeta.jsp" />
+	</definition>
+	<definition name="metadata/columnmeta/edittable" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/access/columnmeta.jsp" />
+	</definition>
+	<definition name="metadata/columnmeta/new" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/access/columnmeta.jsp" />
+	</definition>
+	<definition name="metadata/deploy" extends="metabase">
+		<put-attribute name="body" value="/WEB-INF/pages/access/deploy.jsp" />
+	</definition>
+	<definition name="metadata/deploy/success" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/static/deploy_success.jsp" />
+	</definition>
+	<definition name="metadata/deploy/fail" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/static/deploy/fail.jsp" />
+	</definition>
+	<definition name="metadata/deploy/fail_duplicatedb" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/static/deploy_fail_duplicatedb.jsp" />
+	</definition>
+	<definition name="metadata/deploy/info" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/access/deploy_info.jsp" />
+	</definition>
+	<definition name="metadata/deploy/manage" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/access/deploy_manage.jsp" />
+	</definition>
+	<definition name="metadata/deploy/manage/modify" extends="metabase">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/access/deploy_modify.jsp" />
+	</definition>
+	<!-- end of MetaData -->
 
 </tiles-definitions>

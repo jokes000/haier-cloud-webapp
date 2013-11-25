@@ -25,9 +25,9 @@
 
 	<!-- use annotation to auto register bean, and make sure @Required, @Autowired 
 		bean to be injected -->
-	<context:component-scan base-package="cn.edu.sjtu.se.dslab.haiercloud">
-		
+	<context:component-scan base-package="cn.edu.sjtu.se.dclab.haiercloud">
 	</context:component-scan>
+	<context:component-scan base-package="cn.edu.sjtu.se.dclab.metadata"></context:component-scan>
 
 	<!-- database configuration -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -46,7 +46,12 @@
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="cn.edu.sjtu.se.dslab.haiercloud.web.entity" />
+		<property name="packagesToScan">
+			<list>
+				<value>cn.edu.sjtu.se.dclab.haiercloud.web.entity</value>
+				<value>cn.edu.sjtu.se.dclab.metadata.dao.bean</value>
+			</list>
+		</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
@@ -56,7 +61,7 @@
 			</props>
 		</property>
 		<!--  
-		<property name="packagesToScan" value="cn.edu.sjtu.se.dslab.haiercloud.web.entity" />
+		<property name="packagesToScan" value="cn.edu.sjtu.se.dclab.haiercloud.web.entity" />
 		-->
 	</bean>
 

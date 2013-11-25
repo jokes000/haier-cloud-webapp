@@ -23,7 +23,12 @@
 	<mvc:annotation-driven />
 
 	<!-- auto scanning and only scan @Conroller -->
-	<context:component-scan base-package="cn.edu.sjtu.se.dslab.haiercloud.web"
+	<context:component-scan base-package="cn.edu.sjtu.se.dclab.haiercloud.web"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<context:component-scan base-package="cn.edu.sjtu.se.dclab.metadata"
 		use-default-filters="false">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
