@@ -233,9 +233,11 @@
 													</p>
 												</c:otherwise>
 											</c:choose></td>
-										<td><button class="btn btn-danger btn-small">
-												<i class="icon-white icon-minus"></i>删除
-											</button></td>
+										<td>
+										<a id="modal-delete-dn" href="#delete-dn" role="button" class="btn btn-danger btn-small" 
+												data-toggle="modal">
+												<i class="icon-white icon-minus"></i>删除该节点</a>
+											</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -269,6 +271,14 @@
 							<div class="modal-footer">
 								<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
 								<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="modal-add-dn-submit">确定</button>
+							</div>
+						</div>
+						
+						<div id="delete-dn" class="modal hide fade"
+							role="dialog" aria-labelledby="myModalLable" aria-hidden="true">
+							<div class="modal-body">
+								<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+								<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="modal-delete-dn-submit">确定</button>
 							</div>
 						</div>
 					</div>
@@ -320,12 +330,18 @@
 			}
 		});
 		
-		$.post('<%=request.getContextPath()%>' + '/deploy/hadoop/' + '${cluster.id}' + '/add', {
-			'vms[]' : vmArray
+		$.post('<%=request.getContextPath()%>' + '/deploy/hadoop/'  + '${cluster.id}' + '/add', {
+			'vms[]' : vmArray,
+			'namenodeIP' : '${nn.ip}'
 		});
 	});
 	
 	$('.radio1').on('switch-change', function() {
 		$('.radio1').bootstrapSwitch('toggleRadioState');
+	});
+	
+	/* 点击删除该节点按钮后，显示确定和取消按键。 */
+	$('#modal-delete-dn-submit').click(function() {
+		
 	});
 </script>

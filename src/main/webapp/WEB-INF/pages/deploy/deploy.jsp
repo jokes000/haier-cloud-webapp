@@ -13,7 +13,7 @@
 					<li class="span4">
 						<div class="thumbnail">
 							<a href="<%=request.getContextPath()%>/deploy/hadoop"><img
-								alt="300x200" src="<%=request.getContextPath()%>/resource/img/Hadoop.jpg" /></a>
+								alt="300x200" src="<%=request.getContextPath()%>/resource/img/hadoop.jpg" /></a>
 							<div class="caption">
 								<h3>Hadoop</h3>
 								<p>部署存储海量数据并对其进行分析的Hadoop平台。</p>
@@ -24,7 +24,7 @@
 						<div class="thumbnail">
 							<a href="<%=request.getContextPath()%>/deploy/mongodb"><img
 								alt="300x200"
-								src="<%=request.getContextPath()%>/resource/img/MongoDB.jpg" /></a>
+								src="<%=request.getContextPath()%>/resource/img/mongodb.jpg" /></a>
 							<div class="caption">
 								<h3>MongoDB</h3>
 								<p>部署一个海量数据库MongoDB。</p>
@@ -34,7 +34,7 @@
 					<li class="span4">
 						<div class="thumbnail">
 							<a href="<%=request.getContextPath()%>/deploy/mysql"><img
-								alt="300x200" src="<%=request.getContextPath()%>/resource/img/MySQL.jpg" /></a>
+								alt="300x200" src="<%=request.getContextPath()%>/resource/img/mysql.jpg" /></a>
 							<div class="caption">
 								<h3>MySQL</h3>
 								<p>部署一个关系性数据库MySQL集群。</p>

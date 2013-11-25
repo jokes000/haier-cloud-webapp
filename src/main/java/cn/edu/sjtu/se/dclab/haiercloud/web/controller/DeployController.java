@@ -73,8 +73,16 @@ public class DeployController {
 
 	@RequestMapping(value = "/hadoop/{id}/add", method = RequestMethod.POST)
 	public void addVmsToCluster(@PathVariable(value = "id") long id,
+			@RequestParam(value="namenodeIP",required=true) String namenodeIP,
 			@RequestParam(value = "vms[]", required = true) long[] vms) {
-		dcService.addNodesToHadoopCluster(id, vms);
+		dcService.addNodesToHadoopCluster(id,namenodeIP,vms);
+	}
+	
+	@RequestMapping(value="/hadoop/{id}/delete",method=RequestMethod.POST)
+	public void deleteVmsInCluster(@PathVariable(value="id") long id,
+			@RequestParam(value="namenodeIP",required=true) String namenodeIP,
+			@RequestParam(value="vms[]",required=true) long[] vms){
+		dcService.deleteNodesInHadoopCluster(id,namenodeIP,vms);
 	}
 
 	@RequestMapping(value = "/mongodb", method = RequestMethod.GET)

@@ -11,7 +11,9 @@ public interface IDeployClusterService {
 	public void deployHadoopCluster(long namenode, long[] snnList,
 			long[] dnList, long jobtracker, long[] ttList, String clusterName);
 
-	public void addNodesToHadoopCluster(long clusterId, long[] vms);
+	public void addNodesToHadoopCluster(long clusterId, String namenodeIP,long[] vms);
+	
+	public void deleteNodesInHadoopCluster(long clusterId,String namenodeIP,long[] vms);
 
 	public void deployMongoDBCluster(long[] configserver, long[] mongos,
 			long[] shard1, long[] shard2, String clusterName);

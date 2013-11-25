@@ -3,6 +3,7 @@ package cn.edu.sjtu.se.dclab.haiercloud.web.service.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,6 +31,7 @@ import cn.edu.sjtu.se.dclab.haiercloud.web.service.IDeployClusterService;
 import cn.edu.sjtu.se.dclab.haiercloud.web.service.INodeMetaService;
 import cn.edu.sjtu.se.dclab.haiercloud.web.service.INodeService;
 import cn.edu.sjtu.se.dclab.haiercloud.web.service.IVirtualMachineService;
+import cn.edu.sjtu.se.dclab.haiercloud.deploy.DeployCluster;
 
 @Component("deployClusterService")
 @Transactional
@@ -40,7 +42,7 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 	IVirtualMachineService vmService;
 
 	@Resource(name = "deployHadoopCluster")
-	DeployHadoopCluster dhc;
+	DeployCluster dhc;
 
 	@Resource(name = "deployMongodbCluster")
 	DeployMongoDBCluster dmc;
@@ -56,9 +58,6 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 
 	@Resource(name = "nodeService")
 	INodeService nodeService;
-
-	// @Resource(name = "convertor")
-	// DeployDataConvertor convertor;
 
 	@Resource(name = "virtualMachineDao")
 	IVirtualMachineDao vmDao;
@@ -158,14 +157,6 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 		ca.setSecondaryNameNodeIP(master.getIp());
 		ca.setHm(nodeMap);
 
-		/*
-		 * Properties pt = new Properties();
-		 * 
-		 * InputStream in = getClass().getResourceAsStream(
-		 * "/WEB-INF/classes/hadoop.properties"); try { pt.load(in); } catch
-		 * (IOException ioe) { ioe.printStackTrace(); }
-		 */
-
 		boolean ret = dhc.addCluster(ca);
 
 		// success or fail process
@@ -180,12 +171,11 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 			cluster.setStatus(VirtualMachine.ERROR);
 			clusterService.updateCluster(cluster);
 		}
-
 		// update database
 	}
 
 	@Async
-	public void addNodesToHadoopCluster(long clusterId, long[] vms) {
+	public void addNodesToHadoopCluster(long clusterId,String namenodeIP,long[] vms) {
 		// get all info
 		List<VirtualMachine> vmList = new ArrayList<VirtualMachine>();
 		for (long vmid : vms) {
@@ -196,30 +186,120 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 		// update database
 		for (VirtualMachine vm : vmList) {
 			vm.setCluster(cluster);
+			
 			vm.setStatus(VirtualMachine.DEPLOY);
 			vmDao.update(vm);
 		}
 		// end of updating database
-
+		String namenodePassword="";
+		Set<VirtualMachine> set=cluster.getVms();
+		Iterator<VirtualMachine> iterator=set.iterator();
+		while(iterator.hasNext()){
+			VirtualMachine vm=iterator.next();
+			if(vm.getIp().equals(namenodeIP))
+				namenodePassword=vm.getPassword();
+		}
+		HashMap<String,String> hm=new HashMap<String, String>();
+		hm.put(namenodeIP,namenodePassword);
+		for(VirtualMachine vm : vmList){
+			hm.put(vm.getIp(), vm.getPassword());
+		}
 		// deploy
 		ClusterArguments ca = new ClusterArguments();
-
+		ca.setClusterName(cluster.getName());
+		ca.setMasterIP(namenodeIP);
+		ca.setHm(hm);
 		/*
 		 * Properties pt = new Properties(); InputStream in =
 		 * getClass().getResourceAsStream("/WEB-INF/hadoop.properties"); try {
 		 * pt.load(in); } catch (IOException ioe) { ioe.printStackTrace(); }
 		 */
 
-		// dhc.addNode(ca, pt);
+		dhc.addNode(ca);
 		// end of deploy
 
 		// update database base on deploy status
+		
+		NodeMeta dataNodeMeta = nmService.getNodeMetaByName("datanode");
+		
 		for (VirtualMachine vm : vmList) {
+			Node datanode = new Node();
+			datanode.setName(cluster.getName() + "_" + datanode);
+			datanode.setPort(50030);
+			datanode.setVm(vm);
+			datanode.setMeta(dataNodeMeta);
+			nodeService.addNode(datanode);
+			
 			vm.setStatus(VirtualMachine.STABLE);
+			vm.getNodes().add(datanode);
 			vmDao.update(vm);
 		}
 		// end of update databse base on deploy status
 	}
+	
+	@Async
+	public void deleteNodesInHadoopCluster(long clusterId,String namenodeIP,long[] vms) {
+		// get all info
+		List<VirtualMachine> vmList = new ArrayList<VirtualMachine>();
+		for (long vmid : vms) {
+			vmList.add(vmService.getVirtualMachineById(vmid));
+		}
+		Cluster cluster = clusterService.getClusterById(clusterId);
+
+		// update database
+		for (VirtualMachine vm : vmList) {
+			vm.setCluster(cluster);
+			
+			vm.setStatus(VirtualMachine.DEPLOY);
+			vmDao.update(vm);
+		}
+		// end of updating database
+		String namenodePassword="";
+		Set<VirtualMachine> set=cluster.getVms();
+		Iterator<VirtualMachine> iterator=set.iterator();
+		while(iterator.hasNext()){
+			VirtualMachine vm=iterator.next();
+			if(vm.getIp().equals(namenodeIP))
+				namenodePassword=vm.getPassword();
+		}
+		HashMap<String,String> hm=new HashMap<String, String>();
+		hm.put(namenodeIP,namenodePassword);
+		for(VirtualMachine vm : vmList){
+			hm.put(vm.getIp(), vm.getPassword());
+		}
+		// deploy
+		ClusterArguments ca = new ClusterArguments();
+		ca.setClusterName(cluster.getName());
+		ca.setMasterIP(namenodeIP);
+		ca.setHm(hm);
+		/*
+		 * Properties pt = new Properties(); InputStream in =
+		 * getClass().getResourceAsStream("/WEB-INF/hadoop.properties"); try {
+		 * pt.load(in); } catch (IOException ioe) { ioe.printStackTrace(); }
+		 */
+
+		dhc.addNode(ca);
+		// end of deploy
+
+		// update database base on deploy status
+		
+		NodeMeta dataNodeMeta = nmService.getNodeMetaByName("datanode");
+		
+		for (VirtualMachine vm : vmList) {
+			Node datanode = new Node();
+			datanode.setName(cluster.getName() + "_" + datanode);
+			datanode.setPort(50030);
+			datanode.setVm(vm);
+			datanode.setMeta(dataNodeMeta);
+			nodeService.addNode(datanode);
+			
+			vm.setStatus(VirtualMachine.STABLE);
+			vm.getNodes().add(datanode);
+			vmDao.update(vm);
+		}
+		// end of update databse base on deploy status
+	}
+	
 
 	@Async
 	public void deployMongoDBCluster(long[] configserver, long[] mongos,
