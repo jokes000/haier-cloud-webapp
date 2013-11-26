@@ -40,7 +40,7 @@
 							<td></td>
 							<td></td>
 							<td><form:form
-									action="/haiercloud-webapp/metadata/columnmeta"
+									action="${pageContext.request.contextPath}/metadata/columnmeta"
 									class="pull-left" method="post" modelAttribute="tableMeta">
 									<form:hidden path="id" value="${tablemeta.id }" />
 									<button class="btn btn-primary btn-small">编辑</button>
@@ -64,7 +64,7 @@
 			aria-hidden="true">&times;</button>
 		<h3>新建实体</h3>
 	</div>
-	<form:form method="post" action="/tablemeta/create"
+	<form:form method="post" action="${pageContext.request.contextPath}/metadata/tablemeta/create"
 		modelAttribute="tableMeta">
 		<div class="modal-body">
 			<fieldset>

@@ -1,6 +1,7 @@
 package cn.edu.sjtu.se.dclab.haiercloud.web.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -18,70 +19,71 @@ import cn.edu.sjtu.se.dclab.haiercloud.web.service.IAuthService;
 
 @Controller
 public class LoginController {
-	
+
 	@Resource(name = "authService")
 	IAuthService authService;
-	
-	@RequestMapping(value= "/logout", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout() {
-		
+
 		Subject user = SecurityUtils.getSubject();
 		user.logout();
-		
+
 		return "redirect:/login";
 	}
 
-	@RequestMapping(value="/unauthorized", method = RequestMethod.GET)
+	@RequestMapping(value = "/unauthorized", method = RequestMethod.GET)
 	public ModelAndView unauthorizedPage() {
 		// set view
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/unauthorized");
-		
+
 		return mav;
 	}
-	
-	@RequestMapping(value="/login", method = RequestMethod.GET)
-    public ModelAndView getLoginPage() {
-    	// set view
-    	ModelAndView mav = new ModelAndView();
-    	mav.setViewName("/login");
-    	
-    	return mav;
-    }
-    
-	@RequestMapping(value="/register", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView getLoginPage() {
+		// set view
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/login");
+
+		return mav;
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView registerPage() {
 		// set view
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/register");
-		
+
 		return mav;
 	}
-	
-	@RequestMapping(value="/register/submit", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/register/submit", method = RequestMethod.POST)
 	public String register(@RequestParam String username,
 			@RequestParam String password, @RequestParam String email) {
-		
-		User user  = new User();
+
+		User user = new User();
 		user.setEmail(email);
 		user.setUsername(username);
 		user.setPassword(password);
-		
+
 		if (authService.register(user)) {
 			return "redirect:/";
 		} else {
 			return "/register";
 		}
 	}
-	
-    @RequestMapping(value="/login/submit", method = RequestMethod.POST)
-    public String login(@RequestParam String username, @RequestParam String password) {
+
+	@RequestMapping(value="/login/submit", method = RequestMethod.POST)
+    public String login(HttpServletRequest request, @RequestParam String username, @RequestParam String password) {
     	
     	Subject user = SecurityUtils.getSubject();
     	UsernamePasswordToken token = new UsernamePasswordToken(username, password);
     	
     	try {
     		user.login(token);
+    		request.getSession().setAttribute("user", user);
     		return "redirect:/home";
     	} catch (AuthenticationException ae) {
     		System.out.println("登陆信息错误：" + ae);

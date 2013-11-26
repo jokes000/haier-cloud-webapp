@@ -21,8 +21,8 @@ public class BaseController {
 	@RequestMapping(value = "/metadata", method = RequestMethod.GET) 
 	public ModelAndView setDbMeta(HttpServletRequest request) { 
 		//save user to session
-		User user = userService.getUserById(1);
-		request.getSession().setAttribute("user", user);
+		//User user = userService.getUserById(1);
+		//request.getSession().setAttribute("user", user);
 		return new ModelAndView("metabase"); 
 	} 
 
