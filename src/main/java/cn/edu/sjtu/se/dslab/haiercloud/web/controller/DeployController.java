@@ -72,17 +72,22 @@ public class DeployController {
 	}
 
 	@RequestMapping(value = "/hadoop/{id}/add", method = RequestMethod.POST)
-	public void addVmsToCluster(@PathVariable(value = "id") long id,
+	public String addVmsToCluster(@PathVariable(value = "id") long id,
 			@RequestParam(value="namenodeIP",required=true) String namenodeIP,
 			@RequestParam(value = "vms[]", required = true) long[] vms) {
 		dcService.addNodesToHadoopCluster(id,namenodeIP,vms);
+		
+		return "redirect:/cluster/modify/" + id;
 	}
 	
-	@RequestMapping(value="/hadoop/{id}/delete",method=RequestMethod.POST)
-	public void deleteVmsInCluster(@PathVariable(value="id") long id,
+	@RequestMapping(value="/hadoop/{id}/del",method=RequestMethod.POST)
+	public String deleteVmsInCluster(@PathVariable(value="id") long id,
 			@RequestParam(value="namenodeIP",required=true) String namenodeIP,
-			@RequestParam(value="vms[]",required=true) long[] vms){
-		dcService.deleteNodesInHadoopCluster(id,namenodeIP,vms);
+			@RequestParam(value="nodeId",required=true) long nodeId,
+			@RequestParam(value="nodeIP",required=true) String nodeIP){
+		dcService.deleteNodesInHadoopCluster(id,namenodeIP,nodeId,nodeIP);
+		
+		return "redirect:/cluster/modify/" + id;
 	}
 
 	@RequestMapping(value = "/mongodb", method = RequestMethod.GET)
@@ -109,6 +114,26 @@ public class DeployController {
 		dcService.deployMongoDBCluster(configserver, mongos, shard1, shard2, clusterName);
 
 		return mav;
+	}
+	
+	@RequestMapping(value = "/mongodb/{id}/add", method = RequestMethod.POST)
+	public String addShardsToCluster(@PathVariable(value="id") long id,
+			@RequestParam(value = "vms[]", required = true) long[] vms,
+			@RequestParam(value = "mongosIds[]",required = true) long[] mongosIds,
+			@RequestParam(value = "shardNum",required = true) int shardNum) {
+		
+		dcService.addShardToMongoDBCluster(id,vms,mongosIds,shardNum);
+		return "redirect:/cluster/modify/" + id;
+	}
+	
+	@RequestMapping(value = "/mongodb/{id}/del", method = RequestMethod.POST)
+	public String deleteShardsInCluster(@PathVariable(value="id") long id,
+			@RequestParam(value = "mongosIds[]",required = true) long[] mongosIds,
+			@RequestParam(value = "shardName",required = true) String shardName) {
+		
+		dcService.deleteShardInMongoDBCluster(id,mongosIds,shardName);
+		
+		return "redirect:/cluster/modify/" + id;
 	}
 
 	@RequestMapping(value = "/mysql", method = RequestMethod.GET)

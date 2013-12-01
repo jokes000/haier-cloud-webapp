@@ -19,8 +19,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
 
 
 // utils
@@ -62,7 +64,7 @@ public class VirtualMachine implements java.io.Serializable {
     private String os;
     @Column(name = "board_width", nullable = true)
     private int boardWidth;
-    @OneToMany(mappedBy = "vm", cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "vm", cascade = { CascadeType.REMOVE}, fetch = FetchType.EAGER)
     @Fetch( FetchMode.SUBSELECT)
     private Set<Node> nodes;
     @ManyToOne

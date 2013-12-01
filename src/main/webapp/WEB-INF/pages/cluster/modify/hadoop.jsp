@@ -198,31 +198,31 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="item" items="${dn}">
-									<tr>
-										<td><c:out value="${item.name}" /></td>
-										<td><c:out value="${item.ip}" /></td>
-										<td><c:out value="${item.cpu}核" /></td>
-										<td><c:out value="${item.memory}G" /></td>
-										<td><c:out value="${item.storage}G" /></td>
-										<td><c:out value="${item.boardWidth}Mbps" />
+								<c:forEach begin="0" end="${dn.size()-1}" varStatus="loop">
+									<tr> 
+										<td><c:out value="${dn.get(loop.index).name}" /></td>
+										<td><c:out value="${dn.get(loop.index).ip}" /></td>
+										<td><c:out value="${dn.get(loop.index).cpu}核" /></td>
+										<td><c:out value="${dn.get(loop.index).memory}G" /></td>
+										<td><c:out value="${dn.get(loop.index).storage}G" /></td>
+										<td><c:out value="${dn.get(loop.index).boardWidth}Mbps" />
 										<td><c:choose>
-												<c:when test="${item.status eq 2}">
+												<c:when test="${dn.get(loop.index).status eq 2}">
 													<p class="text-warning">
 														<c:out value="状态：正在部署" />
 													</p>
 												</c:when>
-												<c:when test="${item.status eq 1}">
+												<c:when test="${dn.get(loop.index).status eq 1}">
 													<p class="text-success">
 														<c:out value="状态：正常运行" />
 													</p>
 												</c:when>
-												<c:when test="${item.status eq 3}">
+												<c:when test="${dn.get(loop.index).status eq 3}">
 													<p class="muted">
 														<c:out value="状态：正在删除" />
 													</p>
 												</c:when>
-												<c:when test="${item.status eq 4}">
+												<c:when test="${dn.get(loop.index).status eq 4}">
 													<p class="muted">
 														<c:out value="状态：正在添加" />
 													</p>
@@ -234,10 +234,11 @@
 												</c:otherwise>
 											</c:choose></td>
 										<td>
-										<a id="modal-delete-dn" href="#delete-dn" role="button" class="btn btn-danger btn-small" 
-												data-toggle="modal">
-												<i class="icon-white icon-minus"></i>删除该节点</a>
-											</td>
+										<a
+										href="#modal-container-164568" role="button"
+										class="btn btn-danger btn-small modal-del-dn" data-ip="${dn.get(loop.index).ip}" data-id="${dnIds.get(loop.index)}" data-toggle="modal"><i
+											class="icon-white icon-minus"></i>删除该节点</a>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -252,7 +253,7 @@
 							</div>
 							<div class="modal-body">
 								<table class="table table-hover table-bordered" id="vm-list">
-									<thead>
+									<thead                                                                                                             >
 										<tr>
 											<th width="100px">虚拟机名</th>
 											<th width="100px">IP</th>
@@ -270,15 +271,15 @@
 							</div>
 							<div class="modal-footer">
 								<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-								<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="modal-add-dn-submit">确定</button>
+								<button class="btn btn-primary" data-dismiss="modal"  aria-hidden="true" id="modal-add-dn-submit">确定</button>
 							</div>
 						</div>
 						
-						<div id="delete-dn" class="modal hide fade"
+						<div id="modal-container-164568" class="modal hide fade"
 							role="dialog" aria-labelledby="myModalLable" aria-hidden="true">
-							<div class="modal-body">
+							<div class="modal-footer">
 								<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-								<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="modal-delete-dn-submit">确定</button>
+								<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="modal-del-dn-submit">确定</button>
 							</div>
 						</div>
 					</div>
@@ -289,6 +290,9 @@
 </div>
 
 <script type="text/javascript">
+	var nodeIP;
+	var nodeId;
+	
 	/* 点击添加节点按钮后，动态查询剩余虚拟机，并显示。 */
 	$('#modal-add-dn').click(function() {
 		jQuery.ajax({
@@ -301,15 +305,16 @@
 					$('#vm-list tbody').html('');
 					var rows = $('<tbody></tbody>');
 					$.each(data.data, function(n, value) {
-						var tr = $('<tr></tr>');
-						var name = $('<td></td>').append(value.name);
-						var ip = $('<td></td>').append(value.ip);
-						var cpu = $('<td></td>').append(value.cpu + '核');
-						var memory = $('<td></td>').append(value.memory + 'G');
-						var storage = $('<td></td>').append(value.storage + 'G');
-						var boardWidth = $('<td></td>').append(value.boardWidth + 'Mbps');
-						var checked = $("<td id='td-checked'></td>").append("<input id='checkbox' type='checkbox' name='checked' value='" + value.id + "' />");
-						tr.append(name).append(ip).append(cpu).append(memory).append(storage).append(boardWidth).append(checked).appendTo(rows);
+							var tr = $('<tr></tr>');
+							var name = $('<td></td>').append(value.name);
+							var ip = $('<td></td>').append(value.ip);
+							var cpu = $('<td></td>').append(value.cpu + '核');
+							var memory = $('<td></td>').append(value.memory + 'G');
+							var storage = $('<td></td>').append(value.storage + 'G');
+							var boardWidth = $('<td></td>').append(value.boardWidth + 'Mbps');
+							var checked = $("<td id='td-checked'></td>").append("<input id='checkbox' type='checkbox' name='checked' value='" + value.id + "' />");
+							tr.append(name).append(ip).append(cpu).append(memory).append(storage).append(boardWidth).append(checked).appendTo(rows);
+					
 					});
 					$('#vm-list tbody').html(rows.html());
 				}
@@ -340,8 +345,17 @@
 		$('.radio1').bootstrapSwitch('toggleRadioState');
 	});
 	
-	/* 点击删除该节点按钮后，显示确定和取消按键。 */
-	$('#modal-delete-dn-submit').click(function() {
-		
+	$('.modal-del-dn').click(function(){
+		nodeIP=$(this).data('ip');
+		nodeId=$(this).data('id');
 	});
+	
+	$('#modal-del-dn-submit').click(function() {
+		$.post('<%=request.getContextPath()%>' + '/deploy/hadoop/'  + '${cluster.id}' + '/del',{
+			'namenodeIP' : '${nn.ip}',
+			'nodeId' : nodeId,
+			'nodeIP' : nodeIP
+		});
+	});
+
 </script>

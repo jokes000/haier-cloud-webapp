@@ -22,6 +22,14 @@ public class VirtualMachineServiceImpl implements IVirtualMachineService {
 	public void addVirtualMachine(VirtualMachine vm) {
 		dao.save(vm);
 	}
+	
+	public void deleteVirtualMachine(VirtualMachine vm){
+		dao.delete(vm);
+	}
+	
+	public void removeVirtualMachineFromCluster(VirtualMachine vm){
+		dao.update(null);
+	}
 
 	public void updateVirtualMachine(VirtualMachine vm) {
 		dao.update(vm);

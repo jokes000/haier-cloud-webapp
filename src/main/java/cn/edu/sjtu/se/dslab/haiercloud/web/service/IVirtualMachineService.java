@@ -6,6 +6,10 @@ import cn.edu.sjtu.se.dslab.haiercloud.web.entity.VirtualMachine;
 
 public interface IVirtualMachineService {
     public void addVirtualMachine(VirtualMachine vm);
+    
+    public void deleteVirtualMachine(VirtualMachine vm);
+    
+    public void removeVirtualMachineFromCluster(VirtualMachine vm);
 
     public void updateVirtualMachine(VirtualMachine vm);
 

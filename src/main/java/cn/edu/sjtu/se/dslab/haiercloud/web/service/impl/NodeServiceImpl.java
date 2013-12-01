@@ -24,6 +24,10 @@ public class NodeServiceImpl implements INodeService {
 		dao.save(node);
 	}
 
+	public void deleteNode(Node node){
+		dao.delete(node);
+	}
+	
 	public void updateNode(Node node) {
 		dao.update(node);
 	}

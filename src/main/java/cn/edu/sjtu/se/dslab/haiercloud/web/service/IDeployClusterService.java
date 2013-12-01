@@ -13,10 +13,15 @@ public interface IDeployClusterService {
 
 	public void addNodesToHadoopCluster(long clusterId, String namenodeIP,long[] vms);
 	
-	public void deleteNodesInHadoopCluster(long clusterId,String namenodeIP,long[] vms);
+	/*
+	 * 袁长意
+	 */
+	public void deleteNodesInHadoopCluster(long clusterId,String namenodeIP,long nodeId,String nodeIP);
 
 	public void deployMongoDBCluster(long[] configserver, long[] mongos,
 			long[] shard1, long[] shard2, String clusterName);
+	public void addShardToMongoDBCluster(long clusterId,long[] vms,long[] mongosIds,int shardNum);
+	public void deleteShardInMongoDBCluster(long clusterId,long[] mongosIds,String shardName);
 
 	public void deployMySQLCluster();
 }

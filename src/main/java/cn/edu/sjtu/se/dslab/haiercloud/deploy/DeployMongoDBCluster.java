@@ -156,18 +156,28 @@ public class DeployMongoDBCluster {
 
 			shardMap.put(shardName, shardInfos.getMongodMap());
 		}
-		this.mongodSet = mongodMap.keySet();
+		if(mongodMap != null)
+			this.mongodSet = mongodMap.keySet();
 		// this.arbiterSet=arbiterMap.keySet();
 		this.configServerMap = args.getConfigServerMap();
-		this.configServerSet = configServerMap.keySet();
+		if(configServerMap !=null)
+			this.configServerSet = configServerMap.keySet();
+		
 		this.mongosMap = args.getMongosMap();
-		this.mongosSet = mongosMap.keySet();
-		this.shardSet = shardMap.keySet();
+		if(mongosMap != null)
+			this.mongosSet = mongosMap.keySet();
+		
+		if(shardMap != null)
+			this.shardSet = shardMap.keySet();
 
 		this.mongoDBMap = new HashMap<String, String>();
 		mongoDBMap.putAll(mongodMap);
-		mongoDBMap.putAll(configServerMap);
-		mongoDBMap.putAll(mongosMap);
+		if(configServerMap != null)
+			mongoDBMap.putAll(configServerMap);
+		
+		//如果configServerMap为空，表明为addShards操作，无需加入mongos
+		if(configServerMap != null)
+			mongoDBMap.putAll(mongosMap);
 		// mongoDBMap.putAll(arbiterMap);
 		this.mongoDBSet = mongoDBMap.keySet();
 
@@ -527,12 +537,218 @@ public class DeployMongoDBCluster {
 		}
 	}
 
-	public void addShards() {
-
+	public boolean addShards(MongoDBArguments args) {
+		//test
+	/*	this.shellPath = "/home/hadoop/deploy/MongoDBShell";
+		this.mongoDBFilePath = "/home/hadoop/deploy";
+		this.mongoDBClusterLogPath = "/home/hadoop/deploy/logs";
+		this.mongoDBName = "MongoDB";
+		this.mongoDBFileName = "MongoDB";
+		this.mongoDBPath = "/home/hadoop/yuan";
+		this.mongodDataPath = "/home/hadoop/yuan/data";
+		this.mongosDataPath = "/home/hadoop/yuan/data";
+		this.nThreads = 2;
+		*/
+		
+		
+		
+		//初始化，将mongos和要加入的shard的信息传入
+		/*this.mongosMap = args.getMongosMap();
+		this.mongosSet = this.mongosMap.keySet();
+		this.shardList = args.getShardList();
+		this.mongodMap = this.shardList.get(0).getMongodMap();
+		this.mongodSet = this.mongodMap.keySet();
+		this.iterator = mongodSet.iterator();
+		String currTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		String logName = clusterName + "-" + currTime + ".log";
+		try {
+			logWriter = new FileWriter(new File(mongoDBClusterLogPath + "/"
+					+ logName), true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			output("unable to creat MongoDBCluster's log file!");
+		}*/
+		
+		//copy mongodb文件夹
+	/*	installMongoDB();
+		
+		//启动要加入shard的mongod
+		//startMongod();
+		iterator = mongodSet.iterator();
+		while (iterator.hasNext()) {
+			String ip = iterator.next();
+			String pwd = mongodMap.get(ip);
+			try {
+				Process p = Runtime.getRuntime().exec(
+						shellPath + "/startMongod.sh " + " " + ip + " " + pwd + " "
+								+ mongosDataPath + " " + mongoDBPath+"/"+mongoDBName);
+				readBuffer(p.getInputStream(), p.getErrorStream());
+				p.waitFor();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//使用addshard将各mongod加入到shard中	
+		String mongosIP=null;
+		String mongosPassword=null;
+		Iterator<String> it = mongosSet.iterator();
+		if(it.hasNext()){
+			mongosIP = it.next();
+			mongosPassword = mongosMap.get(mongosIP);
+		}
+		StringBuffer mongodSB = new StringBuffer();
+		it=mongodSet.iterator();
+		if(it.hasNext())
+			mongodSB.append(it.next()+":30000");
+		while(it.hasNext())
+			mongodSB.append(","+it.next()+":30000");
+		
+		String command="db.runCommand({addshard:\"" + mongodSB.toString() + "\",name:\"" 
+							+ shardList.get(0).getShardName() + "\"})";
+		
+		try {
+			Process p = Runtime.getRuntime().exec(shellPath + "/addShard.sh"+" "+mongosIP+" "+mongosPassword
+										+" "+"30100"+" "+mongoDBPath+"/"+mongoDBName+" "+command);
+			readBuffer(p.getInputStream(),p.getErrorStream());
+			p.waitFor();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
+		
+		/*以上只能加入含有单个mongod的shard*/
+		
+		//1.init
+		init(args);
+		
+		//2.parallelInstallMongoDB
+		parallelInstallMongoDB();
+		
+		//3.parallelStartMongod
+		parallelStartMongod();
+		
+		//4.parallelStartReplicaSet
+		parallelStartReplicaSet();
+		
+		//5.initiateShard
+		initiateShard();
+		
+		return true;
 	}
 
-	public void deleteShards() {
-
+	public void deleteShards(MongoDBArguments args) {
+		
+		// test
+		
+		/* this.shellPath = "/home/hadoop/deploy/MongoDBShell";
+		 this.mongoDBFilePath = "/home/hadoop/deploy";
+		 this.mongoDBClusterLogPath = "/home/hadoop/deploy/logs";
+		 this.mongoDBName = "MongoDB"; 
+		 this.mongoDBFileName = "MongoDB";
+		 this.mongoDBPath = "/home/hadoop/yuan"; 
+		 this.mongodDataPath = "/home/hadoop/yuan/data";
+		 this.mongosDataPath = "/home/hadoop/yuan/data";
+		 this.nThreads = 2;*/
+		 
+		
+		
+		// 初始化，将mongos和要加入的shard的信息传入
+/*		this.mongosMap = args.getMongosMap();
+		this.mongosSet = this.mongosMap.keySet();
+		this.shardList = args.getShardList();
+		this.iterator = mongosSet.iterator();
+		
+		String mongosIP=null;
+		String mongosPassword=null;
+		String shardName=null;
+		if(iterator.hasNext()){
+			mongosIP = iterator.next();
+			mongosPassword = mongosMap.get(mongosIP);
+		}
+		shardName=shardList.get(0).getShardName();
+		
+		String command = "db.runCommand({removeshard:\""+shardName+"\"})";
+		
+		try {
+			Process  p = Runtime.getRuntime().exec(shellPath+"/removeShard.sh"+" "+mongosIP+" "+mongosPassword
+										+" "+"30100"+" "+mongoDBPath+"/"+mongoDBName+" "+command);
+			readBuffer(p.getInputStream(), p.getErrorStream());
+			p.waitFor();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
+		
+		/*以上只能删除含有一个mongod的shard*/
+		
+		//init
+		init(args);
+		
+		iterator = mongosSet.iterator();
+		String mongosIP = iterator.next();
+		String mongosPassword = mongosMap.get(mongosIP);
+		
+		String command = null;
+		StringBuffer sb = null;
+		iterator = shardSet.iterator();
+		while(iterator.hasNext()){
+			sb = new StringBuffer("db.runCommand({removeshard:\"");
+			String shardName = iterator.next();	
+			sb.append(shardName + "\"})");
+			sb.append("\n");
+		}
+		command = sb.toString();
+		
+		try {
+			Process p = Runtime.getRuntime().exec(shellPath+"/removeShard.sh"+" "+mongosIP+" "+mongosPassword
+											+" "+"30100"+" "+mongoDBPath+"/"+mongoDBName+" "+command);
+			readBuffer(p.getInputStream(), p.getErrorStream());
+			p.waitFor();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//stop all mongod thread and delete data file
+		parallelStopMongod();
+	}
+	
+	private void parallelStopMongod(){
+		output("Stop mongod parallely!");
+		ExecutorService installThreadPool = Executors
+				.newFixedThreadPool(nThreads);
+		class Task implements Callable<Object> {
+			public Object call() throws Exception {
+				stopMongod();
+				return null;
+			}
+		}
+		Task[] tasks = new Task[mongodSet.size()];
+		for (int i = 0; i < mongodSet.size(); i++) {
+			tasks[i] = new Task();
+		}
+		try {
+			iterator = mongodSet.iterator();
+			installThreadPool.invokeAll(Arrays.asList(tasks));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		installThreadPool.shutdown();
+		if (installThreadPool.isTerminated())
+			output("Finish stopping mongod!");
+	}
+	
+	private void stopMongod(){
+		while(iterator.hasNext()){
+			String ip = iterator.next();
+			String pwd = mongodMap.get(ip);
+			try {
+				Process p = Runtime.getRuntime().exec(shellPath+"/stopMongod.sh" + " " +ip+" "+pwd+" "+
+									mongoDBPath+"/"+mongoDBName+" "+shellPath+" "+mongodDataPath);
+				readBuffer(p.getInputStream(),p.getErrorStream());
+				p.waitFor();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void deleteCluster() {

@@ -6,6 +6,8 @@ import cn.edu.sjtu.se.dslab.haiercloud.web.entity.Node;
 
 public interface INodeService {
 	public void addNode(Node node);
+	
+	public void deleteNode(Node node);
 
 	public void updateNode(Node node);
 

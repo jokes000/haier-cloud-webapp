@@ -77,8 +77,9 @@ public class DeployHadoopCluster implements DeployCluster {
 				BufferedReader inputReader = new BufferedReader(
 						new InputStreamReader(input));
 				try {
-					while (inputReader.readLine() != null)
-						;
+					String str;
+					while ((str = inputReader.readLine()) != null)
+						System.out.println(str);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -98,8 +99,9 @@ public class DeployHadoopCluster implements DeployCluster {
 				BufferedReader errorReader = new BufferedReader(
 						new InputStreamReader(error));
 				try {
-					while (errorReader.readLine() != null)
-						;
+					String str;
+					while ((str = errorReader.readLine()) != null)
+						System.out.println(str);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -393,7 +395,7 @@ public class DeployHadoopCluster implements DeployCluster {
 		modifyConfigureFiles();
 
 		// 3、取得master节点的id_rsa.pub文件
-		// installSSHtoMaster();
+		installSSHtoMaster();
 
 		// 4、拷贝master节点的id_rsa.pub文件
 		getMasterPubRsa();
@@ -465,10 +467,11 @@ public class DeployHadoopCluster implements DeployCluster {
 			// 4、集群内机器实现ssh无密码登录
 			output("Make master login the node whose ip is " + nodeIP
 					+ " without password!");
-			/*
-			 * if(!nodeIP.equals(masterIP)){
-			 * installSSHtoSlave(nodeIP,nodePassword); }
-			 */
+			
+			  if(!nodeIP.equals(masterIP)){
+				  installSSHtoSlave(nodeIP,nodePassword); 
+			  }
+			 
 
 			// 5、拷贝jdk到各节点
 			installJDK(nodeIP, nodePassword);

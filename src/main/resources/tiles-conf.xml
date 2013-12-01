@@ -94,6 +94,10 @@
     	<put-attribute name="title" value="修改集群" />
     	<put-attribute name="body" value="/WEB-INF/pages/cluster/modify/hadoop.jsp" />
     </definition>
+    <definition name="/cluster/modify/mongodb" extends="base">
+    	<put-attribute name="title" value="修改集群" />
+    	<put-attribute name="body" value="/WEB-INF/pages/cluster/modify/mongodb.jsp" />
+    </definition>
     <!-- end of /cluster -->
     
     <!-- /admin -->

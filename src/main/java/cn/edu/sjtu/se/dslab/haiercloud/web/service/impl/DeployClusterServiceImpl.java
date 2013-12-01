@@ -235,79 +235,63 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 		
 		for (VirtualMachine vm : vmList) {
 			Node datanode = new Node();
-			datanode.setName(cluster.getName() + "_" + datanode);
-			datanode.setPort(50030);
+			datanode.setName(cluster.getName() + "_" + "datanode");
+			datanode.setPort(50010);
 			datanode.setVm(vm);
 			datanode.setMeta(dataNodeMeta);
-			nodeService.addNode(datanode);
 			
 			vm.setStatus(VirtualMachine.STABLE);
 			vm.getNodes().add(datanode);
 			vmDao.update(vm);
+			nodeService.addNode(datanode);
 		}
 		// end of update databse base on deploy status
 	}
 	
+	/*
+	 * 袁长意
+	 * 
+	 */
 	@Async
-	public void deleteNodesInHadoopCluster(long clusterId,String namenodeIP,long[] vms) {
+	public void deleteNodesInHadoopCluster(long clusterId,String namenodeIP,long nodeId,String nodeIP) {
 		// get all info
-		List<VirtualMachine> vmList = new ArrayList<VirtualMachine>();
-		for (long vmid : vms) {
-			vmList.add(vmService.getVirtualMachineById(vmid));
-		}
 		Cluster cluster = clusterService.getClusterById(clusterId);
-
-		// update database
-		for (VirtualMachine vm : vmList) {
-			vm.setCluster(cluster);
-			
-			vm.setStatus(VirtualMachine.DEPLOY);
-			vmDao.update(vm);
-		}
+		
 		// end of updating database
 		String namenodePassword="";
-		Set<VirtualMachine> set=cluster.getVms();
-		Iterator<VirtualMachine> iterator=set.iterator();
+		String nodePassword="";
+		Set<VirtualMachine> vms=cluster.getVms();
+		Iterator<VirtualMachine> iterator=vms.iterator();
 		while(iterator.hasNext()){
 			VirtualMachine vm=iterator.next();
 			if(vm.getIp().equals(namenodeIP))
 				namenodePassword=vm.getPassword();
+			else if(vm.getIp().equals(nodeIP))
+				nodePassword=vm.getPassword();
 		}
 		HashMap<String,String> hm=new HashMap<String, String>();
 		hm.put(namenodeIP,namenodePassword);
-		for(VirtualMachine vm : vmList){
-			hm.put(vm.getIp(), vm.getPassword());
-		}
+		hm.put(nodeIP, nodePassword);
 		// deploy
 		ClusterArguments ca = new ClusterArguments();
 		ca.setClusterName(cluster.getName());
 		ca.setMasterIP(namenodeIP);
 		ca.setHm(hm);
-		/*
-		 * Properties pt = new Properties(); InputStream in =
+		
+		 /* Properties pt = new Properties(); InputStream in =
 		 * getClass().getResourceAsStream("/WEB-INF/hadoop.properties"); try {
 		 * pt.load(in); } catch (IOException ioe) { ioe.printStackTrace(); }
 		 */
 
-		dhc.addNode(ca);
+		dhc.deleteNode(ca);
 		// end of deploy
 
-		// update database base on deploy status
-		
-		NodeMeta dataNodeMeta = nmService.getNodeMetaByName("datanode");
-		
-		for (VirtualMachine vm : vmList) {
-			Node datanode = new Node();
-			datanode.setName(cluster.getName() + "_" + datanode);
-			datanode.setPort(50030);
-			datanode.setVm(vm);
-			datanode.setMeta(dataNodeMeta);
-			nodeService.addNode(datanode);
-			
-			vm.setStatus(VirtualMachine.STABLE);
-			vm.getNodes().add(datanode);
-			vmDao.update(vm);
-		}
+		// update database
+		Node node = nodeService.getNodeById(nodeId);
+		VirtualMachine nodeVM=node.getVm();
+		nodeVM.setCluster(null);
+		vmService.updateVirtualMachine(nodeVM);
+		nodeService.deleteNode(node);
 		// end of update databse base on deploy status
 	}
 	
@@ -342,6 +326,9 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 		NodeMeta msMeta = nmService.getNodeMetaByName("mongos");
 		NodeMeta mdMeta = nmService.getNodeMetaByName("mongod");
 		
+		String parent1=clusterName+"_shard1";
+		String parent2=clusterName+"_shard2";
+		
 		for (long id : vms) {
 			VirtualMachine vm = vmService.getVirtualMachineById(id);
 			Set<Node> nodes = new HashSet<Node>();
@@ -349,7 +336,7 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 			// add corresponding nodes
 			for (long csid : configserver) {
 				if (csid == id) {
-					Node cs = new Node(clusterName + "_configserver", 30000, csMeta, vm);
+					Node cs = new Node(clusterName + "_configserver", 20000, csMeta, vm);
 					nodes.add(cs);
 					nodeService.addNode(cs);
 				}
@@ -357,38 +344,40 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 
 			for (long msid : mongos) {
 				if (msid == id) {
-					Node ms = new Node(clusterName + "_mongos", 20000, msMeta, vm);
+					Node ms = new Node(clusterName + "_mongos", 30100, msMeta, vm);
 					nodes.add(ms);
 					nodeService.addNode(ms);
 				}
 			}
 			
-			int count = 0;
-			Node parent = null;
+//			int count = 0;
+//			Node parent = null;
 			for (long mongod : shard1) {
 				if (mongod == id) {
-					Node md = new Node(clusterName + "_mongod", 27017, mdMeta, vm);
-					if (count++ == 0) {
-						md.setParent(md);
-						parent = md;
-					} else {
-						md.setParent(parent);
-					}
+					Node md = new Node(clusterName + "_mongod", 30000, mdMeta, vm);
+//					if (count++ == 0) {
+//						md.setParent(md);
+//						parent = md;
+//					} else {
+//						md.setParent(parent);
+//					}
+					md.setParent(parent1);
 					nodes.add(md);
 					nodeService.addNode(md);
 				}
 			}
 			
-			count = 0;
+//			count = 0;
 			for (long mongod : shard2) {
 				if (mongod == id) {
 					Node md = new Node(clusterName + "_mongod", 27017, mdMeta, vm);
-					if (count++ == 0) {
-						md.setParent(md);
-						parent = md;
-					} else {
-						md.setParent(parent);
-					}
+//					if (count++ == 0) {
+//						md.setParent(md);
+//						parent = md;
+//					} else {
+//						md.setParent(parent);
+//					}
+					md.setParent(parent2);
 					nodes.add(md);
 					nodeService.addNode(md);
 				}
@@ -408,14 +397,14 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 			VirtualMachine vm = vmService.getVirtualMachineById(id);
 			shardMap1.put(vm.getIp(), vm.getPassword());
 		}
-		ShardInfos si1 = new ShardInfos("shard-1", shardMap1);
+		ShardInfos si1 = new ShardInfos(clusterName+"_shard-1", shardMap1);
 
 		Map<String, String> shardMap2 = new HashMap<String, String>();
 		for (long id : shard2) {
 			VirtualMachine vm = vmService.getVirtualMachineById(id);
 			shardMap2.put(vm.getIp(), vm.getPassword());
 		}
-		ShardInfos si2 = new ShardInfos("shard-2", shardMap2);
+		ShardInfos si2 = new ShardInfos(clusterName+"_shard-2", shardMap2);
 
 		List<ShardInfos> shardList = new ArrayList<ShardInfos>();
 		shardList.add(si1);
@@ -453,6 +442,113 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 		}
 	}
 
+	public void addShardToMongoDBCluster(long clusterId,long[] vms,long[] mongosIds,int shardNum){
+		Map<String,String> mongosMap = new HashMap<String,String>();
+		Map<String,String> mongodMap = new HashMap<String,String>();
+		List<ShardInfos> shardList = new ArrayList<ShardInfos>();
+		Cluster cluster = clusterService.getClusterById(clusterId);
+		String shardName = cluster.getName()+"_shard"+(shardNum+1);
+		
+		for(int i=0;i<mongosIds.length;i++){
+			VirtualMachine vm = vmService.getVirtualMachineById(mongosIds[i]);
+			mongosMap.put(vm.getIp(),vm.getPassword());
+		}
+		
+		//update vm table
+		for(int i=0;i<vms.length;i++){
+			VirtualMachine vm = vmService.getVirtualMachineById(vms[i]);
+			mongodMap.put(vm.getIp(), vm.getPassword());
+			vm.setCluster(cluster);
+			vm.setStatus(VirtualMachine.DEPLOY);
+			vmDao.update(vm);
+		}
+		ShardInfos shardInfos = new ShardInfos(shardName, mongodMap);
+		shardList.add(shardInfos);
+		
+		MongoDBArguments ma = new MongoDBArguments();
+		ma.setMongosMap(mongosMap);
+		ma.setShardInfos(shardList);
+		ma.setClusterName(cluster.getName());
+		
+		boolean ret = dmc.addShards(ma);
+		
+		// update database base on deploy status
+		if(ret == true){
+
+			NodeMeta dataNodeMeta = nmService.getNodeMetaByName("mongod");
+
+			for (int i = 0; i < vms.length; i++) {
+				VirtualMachine vm = vmService.getVirtualMachineById(vms[i]);
+				Node datanode = new Node();
+				datanode.setName(cluster.getName() + "_" + "mongod");
+				datanode.setPort(30000);
+				datanode.setVm(vm);
+				datanode.setParent(shardName);
+				datanode.setMeta(dataNodeMeta);
+
+				vm.setStatus(VirtualMachine.STABLE);
+				vm.getNodes().add(datanode);
+				vmDao.update(vm);
+				nodeService.addNode(datanode);
+			}
+		}
+		
+	}
+	
+	
+	public void deleteShardInMongoDBCluster(long clusterId,long[] mongosIds,String shardName){
+		
+		//先处理数据
+		Map<String,String> mongodsMap = new HashMap<String,String>();
+		Cluster cluster = clusterService.getClusterById(clusterId);
+		Iterator<VirtualMachine> vmsIterator = cluster.getVms().iterator();
+		while(vmsIterator.hasNext()){
+			VirtualMachine vm = vmsIterator.next();
+			Iterator<Node> nodesIterator = vm.getNodes().iterator();
+			while(nodesIterator.hasNext()){
+				Node node = nodesIterator.next();
+				if(node.getParent()!=null && node.getParent().equals(shardName))
+					mongodsMap.put(vm.getIp(),vm.getPassword());
+			}
+		}
+		ShardInfos shardInfos = new ShardInfos(shardName, mongodsMap);
+		List<ShardInfos> shardList = new ArrayList<ShardInfos>();
+		shardList.add(shardInfos);
+		HashMap<String,String> mongosMap = new HashMap<String, String>();
+		for(int i=0;i<mongosIds.length;i++){
+			VirtualMachine vm = vmService.getVirtualMachineById(mongosIds[i]);
+			mongosMap.put(vm.getIp(), vm.getPassword());
+		}
+		
+		MongoDBArguments ma = new MongoDBArguments();
+		ma.setMongosMap(mongosMap);
+		ma.setShardInfos(shardList);
+		ma.setClusterName(cluster.getName());
+		
+		//调用底层的删除操作
+		dmc.deleteShards(ma);
+		
+		//更新数据库，一个是vm,一个是node
+		Set<VirtualMachine> vms = clusterService.getClusterById(clusterId).getVms();
+		vmsIterator = vms.iterator();
+		while(vmsIterator.hasNext()){
+			VirtualMachine vm = vmsIterator.next();
+			Set<Node> nodes = vm.getNodes();
+			Iterator<Node> nodesIterator = nodes.iterator();
+			while(nodesIterator.hasNext()){
+				Node node = nodesIterator.next();
+				if((node.getParent() != null) && node.getParent().equals(shardName)){
+					vm.getNodes().remove(node);
+					nodeService.deleteNode(node);
+				}
+			}
+			if(vm.getNodes().isEmpty()){
+				vm.setCluster(null);
+				vmService.updateVirtualMachine(vm);
+			}
+		}
+	}
+	
 	public void deployMySQLCluster() {
 		// TODO Auto-generated method stub
 	}

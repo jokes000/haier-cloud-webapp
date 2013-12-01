@@ -72,15 +72,17 @@ public class VMController {
 			List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 			if (!vmList.isEmpty()) {
 				for (VirtualMachine vm : vmList) {
-					Map<String, String> map = new HashMap<String, String>();
-					map.put("id", vm.getId() + "");
-					map.put("name", vm.getName());
-					map.put("ip", vm.getIp());
-					map.put("cpu", vm.getCpu());
-					map.put("memory", vm.getMemory() + "");
-					map.put("storage", vm.getStorage() + "");
-					map.put("boardWidth", vm.getBoardWidth() + "");
-					data.add(map);
+					if(vm.getCluster()==null){
+						Map<String, String> map = new HashMap<String, String>();
+						map.put("id", vm.getId() + "");
+						map.put("name", vm.getName());
+						map.put("ip", vm.getIp());
+						map.put("cpu", vm.getCpu());
+						map.put("memory", vm.getMemory() + "");
+						map.put("storage", vm.getStorage() + "");
+						map.put("boardWidth", vm.getBoardWidth() + "");
+						data.add(map);
+					}
 				}
 			}
 			modalMap.put("data", data);

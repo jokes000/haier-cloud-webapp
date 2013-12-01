@@ -41,12 +41,12 @@ public class Node implements java.io.Serializable {
 	private String name;
 	@Column(name = "port", nullable = false)
 	private int port;
-	@Column(name = "parent")
-	private Node parent;
+	@Column(name = "parent",length = 255)
+	private String parent;
 	@ManyToOne
 	@JoinColumn(name = "meta_id")
 	private NodeMeta meta;
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne(cascade={CascadeType.REFRESH})
 	@JoinColumn(name = "vm_id")
 	private VirtualMachine vm;
 
@@ -77,11 +77,11 @@ public class Node implements java.io.Serializable {
 		this.port = port;
 	}
 
-	public Node getParent() {
+	public String getParent() {
 		return parent;
 	}
 
-	public void setParent(Node parent) {
+	public void setParent(String parent) {
 		this.parent = parent;
 	}
 
