@@ -41,7 +41,7 @@ legend {
 	<div class="content" style="margin-top: 100px">
 		<div class="row">
 			<div class="login-form">
-				<form action="<%=request.getContextPath()%>/login/submit"
+				<form action="<%=request.getContextPath()%>/register/submit"
 					method="POST">
 					<legend>注册新用户</legend>
 					<fieldset>

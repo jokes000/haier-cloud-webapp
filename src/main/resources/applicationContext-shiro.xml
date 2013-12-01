@@ -9,7 +9,7 @@
 
 	<!-- 自定义shiro的realm数据库身份验证 -->
 	<bean id="jdbcAuthenticationRealm"
-		class="cn.edu.sjtu.se.dslab.haiercloud.web.auth.JdbcAuthenticationRealm">
+		class="cn.edu.sjtu.se.dclab.haiercloud.web.auth.JdbcAuthenticationRealm">
 		<property name="name" value="jdbcAuthentication" />
 		<property name="credentialsMatcher">
 			<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
@@ -40,7 +40,7 @@
 
 	<!-- 自定义对 shiro的连接约束,结合shiroSecurityFilter实现动态获取资源 -->
 	<bean id="chainDefinitionSectionMetaSource"
-		class="cn.edu.sjtu.se.dslab.haiercloud.web.auth.ChainDefinitionSectionMetaSource">
+		class="cn.edu.sjtu.se.dclab.haiercloud.web.auth.ChainDefinitionSectionMetaSource">
 		<!-- 默认的连接配置 -->
 		<property name="filterChainDefinitions">
 			<value>

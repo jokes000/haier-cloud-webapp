@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
 	http://www.springframework.org/schema/tx 
@@ -12,9 +14,9 @@
 
 	<description>deploy module configuration</description>
 
-	<context:component-scan base-package="cn.edu.sjtu.se.dslab.haiercloud.deploy" />
+	<context:component-scan base-package="cn.edu.sjtu.se.dclab.haiercloud.deploy" />
 	
-	<bean id="deployHadoopCluster" class="cn.edu.sjtu.se.dslab.haiercloud.deploy.DeployHadoopCluster">
+	<bean id="deployHadoopCluster" class="cn.edu.sjtu.se.dclab.haiercloud.deploy.DeployHadoopCluster">
 		<property name="shellPath" value="${hadoop.shellPath}" /> 
 		<property name="jdk32Path" value="${hadoop.jdk32Path}" />
 		<property name="jdk64Path" value="${hadoop.jdk64Path}" />
@@ -27,7 +29,7 @@
 		<property name="tmpPath" value="${hadoop.tmpPath}" />
 	</bean>
 	
-	<bean id="deployMongodbCluster" class="cn.edu.sjtu.se.dslab.haiercloud.deploy.DeployMongoDBCluster">
+	<bean id="deployMongodbCluster" class="cn.edu.sjtu.se.dclab.haiercloud.deploy.DeployMongoDBCluster">
 		<property name="shellPath" value="${mongodb.shellPath}" /> 
 		<property name="mongoDBFilePath" value="${mongodb.mongoDBFilePath}" />
 		<property name="mongoDBClusterLogPath" value="${mongodb.mongoDBClusterLogPath}" />

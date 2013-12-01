@@ -7,7 +7,7 @@
 		<div class="container">
 			<p id="logo">Cloud Management Platform</p>
 			<ul class="nav nav-pills pull-right">
-				<!-- first li -->
+				<!-- 1st li -->
 				<shiro:authenticated>
 					<li class="dropdown pull-right"><a href="#"
 						data-toggle="dropdown" class="dropdown-toggle">帐号管理 <strong
@@ -20,7 +20,7 @@
 						</ul></li>
 				</shiro:authenticated>
 
-				<!-- second li -->
+				<!-- 2nd li -->
 				<shiro:hasPermission name="admin:view">
 					<li class="dropdown pull-right"><a href="#"
 						data-toggle="dropdown" class="dropdown-toggle">系统权限<strong
@@ -47,7 +47,14 @@
 						</ul></li>
 				</shiro:hasPermission>
 
-				<!-- third li -->
+				<!-- 3rd li -->
+				<shiro:hasPermission name="menu:metadata">
+					<li><a href="${pageContext.request.contextPath}/metadata"
+						data-toggle="dropdown" class="dropdown-toggle">元数据管理<strong
+							class="caret"></strong></a></li>
+				</shiro:hasPermission>
+
+				<!-- 4th li -->
 				<shiro:hasPermission name="menu:cluster">
 					<li class="dropdown pull-right"><a href="#"
 						data-toggle="dropdown" class="dropdown-toggle">集群管理<strong
