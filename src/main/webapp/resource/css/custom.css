@@ -168,3 +168,8 @@ footer nav ul li {
 .vertical-list li:last-child {
 	border-bottom: 1px solid #eaeaea;
 }
+
+/* font */
+#red {
+	color: red;
+}

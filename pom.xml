@@ -21,6 +21,7 @@
 		<jsonlib.version>2.4</jsonlib.version>
 		<shiro.version>1.2.2</shiro.version>
 		<metamodel.version>3.4.5</metamodel.version>
+		<dom4j.version>1.6.1</dom4j.version>
 	</properties>
 	<!-- end of version of jars -->
 
@@ -294,13 +295,8 @@
 		<!-- end of database -->
 
 		<!-- velocity -->
-		<!--  
-		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>${velocity.version}</version>
-		</dependency>
-		-->
+		<!-- <dependency> <groupId>org.apache.velocity</groupId> <artifactId>velocity</artifactId> 
+			<version>${velocity.version}</version> </dependency> -->
 		<!-- end of velocity -->
 
 		<!-- fileUpload -->
@@ -348,7 +344,7 @@
 			<version>${shiro.version}</version>
 		</dependency>
 		<!-- end of shiro -->
-		
+
 		<!-- MetaModel -->
 		<dependency>
 			<groupId>org.eobjects.metamodel</groupId>
@@ -356,6 +352,14 @@
 			<version>${metamodel.version}</version>
 		</dependency>
 		<!-- end of MetaModel -->
+
+		<!-- xml parsing -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>${dom4j.version}</version>
+		</dependency>
+		<!-- end of xml parsing -->
 	</dependencies>
 
 	<!-- Custom repositories -->
