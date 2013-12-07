@@ -5,7 +5,7 @@
 	<!-- <definition name="/login" template="/WEB-INF/pages/static/login.jsp" 
 		/> <definition name="/register" template="/WEB-INF/pages/static/register.jsp" 
 		/> -->
-
+	
 	<definition name="/monitor" template="/WEB-INF/pages/monitor/iframe.html" />
 
 	<definition name="base" template="/WEB-INF/pages/template/template.jsp">
@@ -187,7 +187,7 @@
 		<put-attribute name="body"
 			value="/WEB-INF/pages/access/tablemeta.jsp" />
 	</definition>
-	<definition name="metadata/columnmeta" extends="base">
+	<definition name="metadata/columnmeta" extends="metabase">
 		<put-attribute name="body"
 			value="/WEB-INF/pages/access/columnmeta.jsp" />
 	</definition>
@@ -216,7 +216,7 @@
 	</definition>
 	<definition name="metadata/deploy/fail" extends="metabase">
 		<put-attribute name="body"
-			value="/WEB-INF/pages/static/deploy/fail.jsp" />
+			value="/WEB-INF/pages/static/deploy_fail.jsp" />
 	</definition>
 	<definition name="metadata/deploy/fail_duplicatedb" extends="metabase">
 		<put-attribute name="body"

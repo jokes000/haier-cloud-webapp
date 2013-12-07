@@ -4,7 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="span9">
 	<form:form method="post"
-		action="/haiercloud-webapp/metadata/tablemeta"
+		action="${pageContext.request.contextPath}/metadata/tablemeta"
 		modelAttribute="databaseMeta">
 		<div class="control-group">
 			<div class="controls">

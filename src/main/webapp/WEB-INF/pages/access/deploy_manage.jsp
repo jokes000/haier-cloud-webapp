@@ -27,7 +27,7 @@
 				</thead>
 				<tbody id="deploy_item">
 					<c:forEach items="${deploy_list}" var="deploy">	
-					<form:form method="post" action="/haiercloud-webapp/metadata/deploy/manage/modify"
+					<form:form method="post" action="${pageContext.request.contextPath}/metadata/deploy/manage/modify"
 						modelAttribute="deploy">				
 						<tr>						
 							<td>${deploy.databaseMeta.db_name}</td>

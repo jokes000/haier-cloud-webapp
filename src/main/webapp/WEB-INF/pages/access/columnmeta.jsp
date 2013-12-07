@@ -16,7 +16,7 @@
 <div class="span9">
 	<div class="control-group">
 		<form:form method="post"
-			action="/haiercloud-webapp/metadata/columnmeta/edittable"
+			action="${pageContext.request.contextPath}/metadata/columnmeta/edittable"
 			modelAttribute="tableMeta">
 			<div class="controls form-inline">
 				<form:hidden path="id" value="${table.id }" />
@@ -49,7 +49,7 @@
 						varStatus="status">					
 						<tr>
 							<form:form method="post"
-							action="/haiercloud-webapp/metadata/columnmeta/del"
+							action="${pageContext.request.contextPath}/metadata/columnmeta/del"
 							modelAttribute="columnMeta">
 								<input type="hidden" name="tid" value="${table.id }" />
 								<form:hidden path="c_name" value="${columnmeta.c_name}" />
@@ -108,7 +108,7 @@
 			aria-hidden="true">&times;</button>
 		<h3>添加列</h3>
 	</div>
-	<form:form method="post" action="/haiercloud-webapp/metadata/columnmeta/new" modelAttribute="columnMeta">
+	<form:form method="post" action="${pageContext.request.contextPath}/metadata/columnmeta/new" modelAttribute="columnMeta">
 	<div class="modal-body">
 		<fieldset>
 			<input type="hidden" name="tid" value='${table.id }' />		
@@ -190,7 +190,7 @@
 			aria-hidden="true">&times;</button>
 		<h3>编辑列</h3>
 	</div>
-	<form:form method="post" action="/haiercloud-webapp/metadata/columnmeta/edit" modelAttribute="columnMeta">
+	<form:form method="post" action="${pageContext.request.contextPath}/metadata/columnmeta/edit" modelAttribute="columnMeta">
 		<div class="modal-body">
 			<fieldset>
 				<input type="hidden" name="tid" value='${table.id }' />

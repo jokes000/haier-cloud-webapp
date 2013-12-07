@@ -39,7 +39,7 @@
 			</table>
 			<div id="holder_deployed" class="holder" align="center"></div>
 		</div>
-		<form method="post" action="/haiercloud-webapp/metadata/deploy/change">
+		<form method="post" action="${pageContext.request.contextPath}/metadata/deploy/change">
 		<div class="controls  form-inline">
 			<input type="hidden" name="database_name" value="${dbname }" />
 			<input type="hidden" name="server" value="${server.id }" />

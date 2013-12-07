@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.edu.sjtu.se.dclab.haiercloud.web.auth.CommonVariableModel;
+import cn.edu.sjtu.se.dclab.haiercloud.web.dao.IUserDao;
 import cn.edu.sjtu.se.dclab.haiercloud.web.entity.User;
 import cn.edu.sjtu.se.dclab.haiercloud.web.service.IAuthService;
 
@@ -22,6 +23,9 @@ public class LoginController {
 
 	@Resource(name = "authService")
 	IAuthService authService;
+	
+	@Resource(name = "userDao")
+	IUserDao userDao;
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout() {
@@ -83,7 +87,8 @@ public class LoginController {
     	
     	try {
     		user.login(token);
-    		request.getSession().setAttribute("user", user);
+    		User tmp = userDao.queryByUserName(username);
+    		request.getSession().setAttribute("user", tmp);
     		return "redirect:/home";
     	} catch (AuthenticationException ae) {
     		System.out.println("登陆信息错误：" + ae);

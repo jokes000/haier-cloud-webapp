@@ -15,7 +15,7 @@
 </script>
 <div class="span9">
 	<div class="control-group">
-		<form id="deploy_form" method="post" action="<%=request.getContextPath()%>/metadata/deploy/add">
+		<form id="deploy_form" method="post" action="${pageContext.request.contextPath}/metadata/deploy/add">
 		<div class="controls form-inline">
 			<div class="control-group input-append">
 				<input type="text" name="database_name" placeholder="实体集名称" data-required="true"/>

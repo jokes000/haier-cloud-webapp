@@ -75,7 +75,7 @@
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
 			<list>
-				<value>classpath*:/tiles-conf.xml</value>
+				<value>/WEB-INF/classes/tiles-conf.xml</value>
 			</list>
 		</property>
 	</bean>
