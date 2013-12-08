@@ -161,10 +161,6 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 		// success or fail process
 		if (ret) { // success
 			cluster.setStatus(VirtualMachine.STABLE);
-			for (VirtualMachine vm : cluster.getVms()) {
-				vm.setStatus(VirtualMachine.STABLE);
-				vmDao.update(vm);
-			}
 			clusterService.updateCluster(cluster);
 		} else { // fail
 			cluster.setStatus(VirtualMachine.ERROR);

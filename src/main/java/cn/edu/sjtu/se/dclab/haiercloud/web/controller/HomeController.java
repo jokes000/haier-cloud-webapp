@@ -116,11 +116,14 @@ public class HomeController {
 				"ssl.trustStore.path", "ssl.trustStore.password",
 				"ssl.trustStore.type");
 		GangliaPropertyProvider gp = new GangliaPropertyProvider(metricProvider);
-		List<VirtualMachine> list = vmService.getByPage(page, pageSize);
+		//List<VirtualMachine> list = vmService.getByPage(page, pageSize);
+		List<VirtualMachine> list = vmService.queryUnusedVM();
+		System.out.println(list.size());
+		
 		List<VMStatus> statusList = new ArrayList<VMStatus>();
 		for (VirtualMachine vm : list) {
 			System.out.println("Server name is:" + vm.getName());
-			VMStatus status = gp.getMetrics(vm.getName() + ".local");
+			VMStatus status = gp.getMetrics(vm.getName());
 			
 			status.setName(vm.getName());
 			status.setIp(vm.getIp());

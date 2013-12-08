@@ -1,5 +1,6 @@
 package cn.edu.sjtu.se.dclab.haiercloud.web.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -56,6 +57,15 @@ public class VirtualMachineServiceImpl implements IVirtualMachineService {
 	}
 
 	public List<VirtualMachine> queryUnusedVM() {
-		return dao.queryUnusedVM();
+		List<VirtualMachine> vms = dao.queryAll();
+		List<VirtualMachine> ret = new ArrayList<VirtualMachine>();
+		
+		for (VirtualMachine vm : vms) {
+			if (vm.getCluster() == null) {
+				ret.add(vm);
+			}
+		}
+		
+		return ret; 
 	}
 }
