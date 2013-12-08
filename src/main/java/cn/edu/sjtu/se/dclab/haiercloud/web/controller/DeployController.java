@@ -49,7 +49,7 @@ public class DeployController {
 		mav.setViewName("/deploy/hadoop");
 
 		// add data
-		List<VirtualMachine> vmList = vmService.getVirtualMachineList();
+		List<VirtualMachine> vmList = vmService.queryUnusedVM();
 		mav.addObject("vmList", vmList);
 
 		return mav;
@@ -97,7 +97,7 @@ public class DeployController {
 		mav.setViewName("/deploy/mongodb");
 
 		// add data
-		mav.addObject("vmList", vmService.getVirtualMachineList());
+		mav.addObject("vmList", vmService.queryUnusedVM());
 
 		return mav;
 	}

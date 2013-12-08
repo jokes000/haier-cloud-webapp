@@ -19,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.edu.sjtu.se.dclab.haiercloud.web.entity.Cluster;
 import cn.edu.sjtu.se.dclab.haiercloud.web.entity.Node;
 import cn.edu.sjtu.se.dclab.haiercloud.web.entity.VirtualMachine;
+import cn.edu.sjtu.se.dclab.haiercloud.web.monitor.VMStatus;
 import cn.edu.sjtu.se.dclab.haiercloud.web.service.IClusterService;
+import cn.edu.sjtu.se.dclab.haiercloud.web.service.IVirtualMachineService;
 
 @Controller
 @RequestMapping(value = "/cluster")
@@ -28,10 +30,13 @@ public class ClusterController {
 	// Properties
 	@Resource(name = "clusterService")
 	IClusterService clusterService;
+	
+	@Resource(name = "virtualMachineService")
+	IVirtualMachineService vmService;
 
 	// Request Handlers
 	@RequestMapping(value = "/modify/{id}", method = RequestMethod.GET)
-	public ModelAndView modifyCluster(@PathVariable(value = "id") long id) {
+	public ModelAndView modifyCluster(@PathVariable(value = "id") long id) throws Exception {
 		ModelAndView mav = new ModelAndView();
 
 		// add data
@@ -64,15 +69,17 @@ public class ClusterController {
 					}
 				}
 			}
-			mav.addObject("nn", nn);
-			mav.addObject("snn", snn);
-			mav.addObject("jt", jt);
-			mav.addObject("dn", dn);
+			
+			mav.addObject("nn", vmService.getStatus(nn));
+			mav.addObject("snn", vmService.getStatusList(snn));
+			mav.addObject("jt", vmService.getStatus(jt));
+			mav.addObject("dn", vmService.getStatusList(dn));
 			mav.addObject("dnIds",dnIds);
 		} else if (cluster.getMeta().getName().equals("mongodb")) {
 			List<VirtualMachine> configserver = new ArrayList<VirtualMachine>(); 
 			List<VirtualMachine> mongos = new ArrayList<VirtualMachine>();
-			Map<String,ArrayList<VirtualMachine>> shards=new HashMap<String,ArrayList<VirtualMachine>>();
+			
+			Map<String,ArrayList<VMStatus>> shards=new HashMap<String,ArrayList<VMStatus>>();
 			
 			for (VirtualMachine vm : cluster.getVms()) {
 				for(Node node : vm.getNodes()){
@@ -82,12 +89,12 @@ public class ClusterController {
 					if(meta.equals("mongos"))
 						mongos.add(vm);
 					if(meta.equals("mongod")){
-						ArrayList<VirtualMachine> hs=shards.get(node.getParent());
-						if(hs!=null)
-							hs.add(vm);
+						ArrayList<VMStatus> hs = shards.get(node.getParent());
+						if(hs != null)
+							hs.add(vmService.getStatus(vm));
 						else{
-							hs=new ArrayList<VirtualMachine>();
-							hs.add(vm);
+							hs = new ArrayList<VMStatus>();
+							hs.add(vmService.getStatus(vm));
 						}
 						shards.put(node.getParent(),hs);
 					}
@@ -98,8 +105,8 @@ public class ClusterController {
 			for(int i=0;i<mongos.size();i++)
 				mongosIds.add(mongos.get(i).getId());			
 			
-			mav.addObject("configserver",configserver);
-			mav.addObject("mongos",mongos);
+			mav.addObject("configserver",vmService.getStatusList(configserver));
+			mav.addObject("mongos",vmService.getStatusList(mongos));
 			mav.addObject("shards",shards.entrySet());
 			mav.addObject("mongosIds",mongosIds);
 			

@@ -112,27 +112,10 @@ public class HomeController {
 		long totalNumber = vmService.totalNumber();
 		mav.addObject("total", totalNumber);
 
-		StreamProvider metricProvider = new URLStreamProvider(1500, 10000,
-				"ssl.trustStore.path", "ssl.trustStore.password",
-				"ssl.trustStore.type");
-		GangliaPropertyProvider gp = new GangliaPropertyProvider(metricProvider);
-		//List<VirtualMachine> list = vmService.getByPage(page, pageSize);
 		List<VirtualMachine> list = vmService.queryUnusedVM();
-		System.out.println(list.size());
 		
-		List<VMStatus> statusList = new ArrayList<VMStatus>();
-		for (VirtualMachine vm : list) {
-			System.out.println("Server name is:" + vm.getName());
-			VMStatus status = gp.getMetrics(vm.getName());
-			
-			status.setName(vm.getName());
-			status.setIp(vm.getIp());
-			status.setCpu(vm.getCpu());
-			status.setMemory(vm.getMemory() + "");
-			status.setStorage(vm.getStorage() + "");
-			status.setBoardWidth(vm.getBoardWidth() + "");
-			statusList.add(status);
-		}
+		List<VMStatus> statusList = vmService.getStatusList(list);
+		
 		mav.addObject("vmList", statusList);
 
 		mav.addObject("page", page);
