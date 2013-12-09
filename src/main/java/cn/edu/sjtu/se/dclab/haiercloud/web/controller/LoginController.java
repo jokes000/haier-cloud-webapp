@@ -1,5 +1,9 @@
 package cn.edu.sjtu.se.dclab.haiercloud.web.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -84,11 +88,24 @@ public class LoginController {
     	
     	Subject user = SecurityUtils.getSubject();
     	UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+    	token.setRememberMe(false);
     	
     	try {
     		user.login(token);
     		User tmp = userDao.queryByUserName(username);
     		request.getSession().setAttribute("user", tmp);
+    		request.getSession().setAttribute("pass", password);
+    		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("project.properties");
+    		Properties prop = new Properties();
+    		try {
+    			prop.load(inputStream);
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		String url = (String) prop.get("dataprocess");
+    		request.getSession().setAttribute("url", url);
+    		
     		return "redirect:/home";
     	} catch (AuthenticationException ae) {
     		System.out.println("登陆信息错误：" + ae);

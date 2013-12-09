@@ -93,7 +93,7 @@ public class DeployServiceImpl implements DeployService {
 	
 	@Transactional
 	public String createMysqlDB(String dbname, Server server, HttpServletRequest request){
-		String sql = "CREATE DATABASE " + dbname;
+		String sql = "CREATE DATABASE " + dbname + " DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection(
@@ -208,11 +208,8 @@ public class DeployServiceImpl implements DeployService {
 	public void writeXML(TableMeta tablemeta, String _dbname, 
 			Server _server, HttpServletRequest request) throws Exception{
 		
-		String path = request.getContextPath() + "/WEB-INF/xml";
-		
-		
-		
-		
+		String path = "D:\\Program Files\\Apache Software Foundation\\apache-tomcat-7.0.42\\webapps\\haier-cloud-webapp\\WEB-INF\\xml";
+
 		System.out.println(path);
 		File file = new File(path + "/" + tablemeta.getT_name() + "_" + _dbname + "_" 
 				+ _server.getType() + "_" + ((User)request.getSession().getAttribute("user")).getId() + ".xml");

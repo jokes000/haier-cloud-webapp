@@ -120,7 +120,7 @@ public class DeployMetaDataController {
 		List<DatabaseMeta> db_list = databaseMetaService.getDatabaseMetaByServer(server);
 		for(DatabaseMeta dm : db_list){
 			if(dbname.equals(dm.getDb_name())){
-				mv.setViewName("/metadata/deploy/fail_duplicatedb");
+				mv.setViewName("metadata/deploy/fail_duplicatedb");
 				return mv;
 			}
 		}
@@ -145,7 +145,7 @@ public class DeployMetaDataController {
 				status = "fail";
 				deploy.setStatus(status);
 				deployService.createDeploy(deploy);	
-				mv.setViewName("/metadata/deploy/fail");
+				mv.setViewName("metadata/deploy/fail");
 				return mv;
 			}
 			Iterator<String> it = tableid_list.iterator();
@@ -155,14 +155,14 @@ public class DeployMetaDataController {
 				msg = deployService.createMysql(tm, dbname, server, request);
 				if(msg.equals("success")){
 					status = "success";
-					mv.setViewName("/metadata/deploy/success");
+					mv.setViewName("metadata/deploy/success");
 					Relation relation = new Relation();
 					relation.setDatabaseMeta(dbmeta);
 					relation.setTableMeta(tm);
 					relationService.creataRelation(relation);
 				}else {
 					status = "fail";
-					mv.setViewName("/metadata/deploy/fail");
+					mv.setViewName("metadata/deploy/fail");
 					break;
 				}				
 			}
@@ -178,14 +178,14 @@ public class DeployMetaDataController {
 				msg = deployService.createMongo(tm, dbname, server, request);
 				if(msg.equals("success")){
 					status = "success";
-					mv.setViewName("/metadata/deploy/success");
+					mv.setViewName("metadata/deploy/success");
 					Relation relation = new Relation();
 					relation.setDatabaseMeta(dbmeta);
 					relation.setTableMeta(tm);
 					relationService.creataRelation(relation);
 				}else {
 					status = "fail";
-					mv.setViewName("/metadata/deploy/fail");
+					mv.setViewName("metadata/deploy/fail");
 					break;
 				}				
 			}
@@ -216,14 +216,14 @@ public class DeployMetaDataController {
 				msg = deployService.createMysql(tm, dbname, server, request);
 				if(msg.equals("success")){
 					status = "success";
-					mv.setViewName("/metadata/deploy/success");
+					mv.setViewName("metadata/deploy/success");
 					Relation relation = new Relation();
 					relation.setDatabaseMeta(dbmeta);
 					relation.setTableMeta(tm);
 					relationService.creataRelation(relation);
 				}else {
 					status = "fail";
-					mv.setViewName("/metadata/deploy/fail");
+					mv.setViewName("metadata/deploy/fail");
 					break;
 				}				
 			}
@@ -239,14 +239,14 @@ public class DeployMetaDataController {
 				msg = deployService.createMongo(tm, dbname, server, request);
 				if(msg.equals("success")){
 					status = "success";
-					mv.setViewName("/metadata/deploy/success");
+					mv.setViewName("metadata/deploy/success");
 					Relation relation = new Relation();
 					relation.setDatabaseMeta(dbmeta);
 					relation.setTableMeta(tm);
 					relationService.creataRelation(relation);
 				}else {
 					status = "fail";
-					mv.setViewName("/metadata/deploy/fail");
+					mv.setViewName("metadata/deploy/fail");
 					break;
 				}				
 			}

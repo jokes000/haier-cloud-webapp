@@ -161,5 +161,5 @@ public class User implements Serializable {
 	public void setPermsList(Set<Perm> permsList) {
 		this.permsList = permsList;
 	}
-
+	
 }

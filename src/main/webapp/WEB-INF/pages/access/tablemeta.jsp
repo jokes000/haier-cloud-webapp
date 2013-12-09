@@ -45,7 +45,7 @@
 									<form:hidden path="id" value="${tablemeta.id }" />
 									<button class="btn btn-primary btn-small">编辑</button>
 								</form:form> <form:form class="pull-left" method="post"
-									action="/tablemeta/del" modelAttribute="tableMeta">
+									action="${pageContext.request.contextPath}/metadata/tablemeta/del" modelAttribute="tableMeta">
 									<button class="btn btn-danger btn-small">删除</button>
 									<form:hidden path="id" value="${tablemeta.id}" />
 								</form:form></td>
