@@ -29,8 +29,11 @@
 									<th width="100px">虚拟机名</th>
 									<th width="100px">IP</th>
 									<th width="80px">CPU</th>
+									<th width="80px">CPU空闲率</th>
 									<th width="80px">内存</th>
+									<th width="80px">剩余内存</th>
 									<th width="80px">硬盘</th>
+									<th width="80px">剩余磁盘空间</th>
 									<th width="80px">带宽</th>
 									<th width="80px">状态</th>
 								</tr>
@@ -40,36 +43,49 @@
 									<td><c:out value="${nn.name}" /></td>
 									<td><c:out value="${nn.ip}" /></td>
 									<td><c:out value="${nn.cpu}核" /></td>
-									<td><c:out value="${nn.memory}G" /></td>
-									<td><c:out value="${nn.storage}G" /></td>
-									<td><c:out value="${nn.boardWidth}Mbps" /></td>
-									<td><c:choose>
-											<c:when test="${nn.status eq 2}">
-												<p class="text-warning">
-													<c:out value="状态：正在部署" />
-												</p>
-											</c:when>
-											<c:when test="${nn.status eq 1}">
-												<p class="text-success">
-													<c:out value="状态：正常运行" />
-												</p>
-											</c:when>
-											<c:when test="${nn.status eq 3}">
-												<p class="muted">
-													<c:out value="状态：正在删除" />
-												</p>
-											</c:when>
-											<c:when test="${nn.status eq 4}">
-												<p class="muted">
-													<c:out value="状态：正在添加" />
-												</p>
+									<td>
+										<c:choose>
+											<c:when test="${nn.cpu_idle.status!='OK' }">
+												<b id="red"><c:out value="${nn.cpu_idle.value}" /></b>
 											</c:when>
 											<c:otherwise>
-												<p class="text-error">
-													<c:out value="状态：部署失败" />
-												</p>
+												<b><c:out value="${nn.cpu_idle.value}" /></b>
 											</c:otherwise>
-										</c:choose></td>
+										</c:choose>
+									</td>
+									<td><c:out value="${nn.memory}G" /></td>
+									<td>
+										<c:choose>
+											<c:when test="${nn.mem_free.status!='OK' }">
+												<b id="red"><c:out value="${nn.mem_free.value}" /></b>
+											</c:when>
+											<c:otherwise>
+												<b><c:out value="${nn.cpu_idle.value}" /></b>
+											</c:otherwise>
+										</c:choose>
+									</td>
+									<td><c:out value="${nn.storage}G" /></td>
+									<td>
+										<c:choose>
+											<c:when test="${nn.disk_free.status!='OK' }">
+												<b id="red"><c:out value="${nn.mem_free.value}" /></b>
+											</c:when>
+											<c:otherwise>
+												<b><c:out value="${nn.disk_free.value}" /></b>
+											</c:otherwise>
+										</c:choose>
+									</td>
+									<td><c:out value="${nn.boardWidth}Mbps" /></td>
+									<td>
+										<c:choose>
+											<c:when test="${nn.status!='OK'}">
+												<b id="red"><c:out value="${nn.status}" /></b>
+											</c:when>
+											<c:otherwise>
+												<b>OK</b>
+											</c:otherwise>
+										</c:choose>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -81,8 +97,11 @@
 									<th width="100px">虚拟机名</th>
 									<th width="100px">IP</th>
 									<th width="80px">CPU</th>
+									<th width="80px">CPU空闲率</th>
 									<th width="80px">内存</th>
+									<th width="80px">剩余内存</th>
 									<th width="80px">硬盘</th>
+									<th width="80px">剩余磁盘空间</th>
 									<th width="80px">带宽</th>
 									<th width="80px">状态</th>
 								</tr>
@@ -93,36 +112,49 @@
 										<td><c:out value="${item.name}" /></td>
 										<td><c:out value="${item.ip}" /></td>
 										<td><c:out value="${item.cpu}核" /></td>
-										<td><c:out value="${item.memory}G" /></td>
-										<td><c:out value="${item.storage}G" /></td>
-										<td><c:out value="${item.boardWidth}Mbps" /></td>
-										<td><c:choose>
-												<c:when test="${item.status eq 2}">
-													<p class="text-warning">
-														<c:out value="状态：正在部署" />
-													</p>
-												</c:when>
-												<c:when test="${item.status eq 1}">
-													<p class="text-success">
-														<c:out value="状态：正常运行" />
-													</p>
-												</c:when>
-												<c:when test="${item.status eq 3}">
-													<p class="muted">
-														<c:out value="状态：正在删除" />
-													</p>
-												</c:when>
-												<c:when test="${item.status eq 4}">
-													<p class="muted">
-														<c:out value="状态：正在添加" />
-													</p>
+										<td>
+											<c:choose>
+												<c:when test="${item.cpu_idle.status!='OK' }">
+													<b id="red"><c:out value="${item.cpu_idle.value}" /></b>
 												</c:when>
 												<c:otherwise>
-													<p class="text-error">
-														<c:out value="状态：部署失败" />
-													</p>
+													<b><c:out value="${item.cpu_idle.value}" /></b>
 												</c:otherwise>
-											</c:choose></td>
+											</c:choose>
+										</td>
+										<td><c:out value="${item.memory}G" /></td>
+										<td>
+											<c:choose>
+												<c:when test="${item.mem_free.status!='OK' }">
+													<b id="red"><c:out value="${item.mem_free.value}" /></b>
+												</c:when>
+												<c:otherwise>
+													<b><c:out value="${item.mem_free.value}" /></b>
+												</c:otherwise>
+											</c:choose>
+										</td>
+										<td><c:out value="${item.storage}G" /></td>
+										<td>
+											<c:choose>
+												<c:when test="${item.disk_free.status!='OK' }">
+													<b id="red"><c:out value="${item.disk_free.value}" /></b>
+												</c:when>
+												<c:otherwise>
+													<b><c:out value="${item.disk_free.value}" /></b>
+												</c:otherwise>
+											</c:choose>
+										</td>
+										<td><c:out value="${item.boardWidth}Mbps" /></td>
+										<td>
+											<c:choose>
+												<c:when test="${item.status!='OK'}">
+													<b id="red"><c:out value="${item.status}" /></b>
+												</c:when>
+												<c:otherwise>
+													<b>OK</b>
+												</c:otherwise>
+											</c:choose>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -135,8 +167,11 @@
 									<th width="100px">虚拟机名</th>
 									<th width="100px">IP</th>
 									<th width="80px">CPU</th>
+									<th width="80px">CPU空闲率</th>
 									<th width="80px">内存</th>
+									<th width="80px">剩余内存</th>
 									<th width="80px">硬盘</th>
+									<th width="80px">剩余磁盘空间</th>
 									<th width="80px">带宽</th>
 									<th width="80px">状态</th>
 								</tr>
@@ -146,36 +181,49 @@
 									<td><c:out value="${jt.name}" /></td>
 									<td><c:out value="${jt.ip}" /></td>
 									<td><c:out value="${jt.cpu}核" /></td>
-									<td><c:out value="${jt.memory}G" /></td>
-									<td><c:out value="${jt.storage}G" /></td>
-									<td><c:out value="${jt.boardWidth}Mbps" /></td>
-									<td><c:choose>
-											<c:when test="${jt.status eq 2}">
-												<p class="text-warning">
-													<c:out value="状态：正在部署" />
-												</p>
-											</c:when>
-											<c:when test="${jt.status eq 1}">
-												<p class="text-success">
-													<c:out value="状态：正常运行" />
-												</p>
-											</c:when>
-											<c:when test="${jt.status eq 3}">
-												<p class="muted">
-													<c:out value="状态：正在删除" />
-												</p>
-											</c:when>
-											<c:when test="${jt.status eq 4}">
-												<p class="muted">
-													<c:out value="状态：正在添加" />
-												</p>
+									<td>
+										<c:choose>
+											<c:when test="${jt.cpu_idle.status!='OK' }">
+												<b id="red"><c:out value="${jt.cpu_idle.value}" /></b>
 											</c:when>
 											<c:otherwise>
-												<p class="text-error">
-													<c:out value="状态：部署失败" />
-												</p>
+												<b><c:out value="${jt.cpu_idle.value}" /></b>
 											</c:otherwise>
-										</c:choose></td>
+										</c:choose>
+									</td>
+									<td><c:out value="${jt.memory}G" /></td>
+									<td>
+										<c:choose>
+											<c:when test="${jt.mem_free.status!='OK' }">
+												<b id="red"><c:out value="${jt.mem_free.value}" /></b>
+											</c:when>
+											<c:otherwise>
+												<b><c:out value="${jt.mem_free.value}" /></b>
+											</c:otherwise>
+										</c:choose>
+									</td>
+									<td><c:out value="${jt.storage}G" /></td>
+									<td>
+										<c:choose>
+											<c:when test="${jt.disk_free.status!='OK' }">
+												<b id="red"><c:out value="${jt.disk_free.value}" /></b>
+											</c:when>
+											<c:otherwise>
+												<b><c:out value="${jt.disk_free.value}" /></b>
+											</c:otherwise>
+										</c:choose>
+									</td>
+									<td><c:out value="${jt.boardWidth}Mbps" /></td>
+									<td>
+										<c:choose>
+											<c:when test="${jt.status!='OK'}">
+												<b id="red"><c:out value="${jt.status}" /></b>
+											</c:when>
+											<c:otherwise>
+												<b>OK</b>
+											</c:otherwise>
+										</c:choose>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -187,11 +235,14 @@
 									<th width="100px">虚拟机名</th>
 									<th width="100px">IP</th>
 									<th width="80px">CPU</th>
+									<th width="80px">CPU空闲率</th>
 									<th width="80px">内存</th>
+									<th width="80px">剩余内存</th>
 									<th width="80px">硬盘</th>
+									<th width="100px">剩余磁盘空间</th>
 									<th width="80px">带宽</th>
 									<th width="80px">状态</th>
-									<th width="80px"><a id="modal-add-dn"
+									<th width="100px"><a id="modal-add-dn"
 										href="#modal-container-164567" role="button"
 										class="btn btn-primary btn-small" data-toggle="modal"><i
 											class="icon-white icon-plus"></i>添加新节点</a></th>
@@ -203,36 +254,49 @@
 										<td><c:out value="${dn.get(loop.index).name}" /></td>
 										<td><c:out value="${dn.get(loop.index).ip}" /></td>
 										<td><c:out value="${dn.get(loop.index).cpu}核" /></td>
-										<td><c:out value="${dn.get(loop.index).memory}G" /></td>
-										<td><c:out value="${dn.get(loop.index).storage}G" /></td>
-										<td><c:out value="${dn.get(loop.index).boardWidth}Mbps" />
-										<td><c:choose>
-												<c:when test="${dn.get(loop.index).status eq 2}">
-													<p class="text-warning">
-														<c:out value="状态：正在部署" />
-													</p>
-												</c:when>
-												<c:when test="${dn.get(loop.index).status eq 1}">
-													<p class="text-success">
-														<c:out value="状态：正常运行" />
-													</p>
-												</c:when>
-												<c:when test="${dn.get(loop.index).status eq 3}">
-													<p class="muted">
-														<c:out value="状态：正在删除" />
-													</p>
-												</c:when>
-												<c:when test="${dn.get(loop.index).status eq 4}">
-													<p class="muted">
-														<c:out value="状态：正在添加" />
-													</p>
+										<td>
+											<c:choose>
+												<c:when test="${dn.get(loop.index).cpu_idle.status!='OK' }">
+													<b id="red"><c:out value="${dn.get(loop.index).cpu_idle.value}" /></b>
 												</c:when>
 												<c:otherwise>
-													<p class="text-error">
-														<c:out value="状态：部署失败" />
-													</p>
+													<b><c:out value="${dn.get(loop.index).cpu_idle.value}" /></b>
 												</c:otherwise>
-											</c:choose></td>
+											</c:choose>
+										</td>
+										<td><c:out value="${dn.get(loop.index).memory}G" /></td>
+										<td>
+											<c:choose>
+												<c:when test="${dn.get(loop.index).mem_free.status!='OK' }">
+													<b id="red"><c:out value="${dn.get(loop.index).mem_free.value}" /></b>
+												</c:when>
+												<c:otherwise>
+													<b><c:out value="${dn.get(loop.index).mem_free.value}" /></b>
+												</c:otherwise>
+											</c:choose>
+										</td>
+										<td><c:out value="${dn.get(loop.index).storage}G" /></td>
+										<td>
+											<c:choose>
+												<c:when test="${dn.get(loop.index).disk_free.status!='OK' }">
+													<b id="red"><c:out value="${dn.get(loop.index).disk_free.value}" /></b>
+												</c:when>
+												<c:otherwise>
+													<b><c:out value="${dn.get(loop.index).disk_free.value}" /></b>
+												</c:otherwise>
+											</c:choose>
+										</td>
+										<td><c:out value="${dn.get(loop.index).boardWidth}Mbps" />
+										<td>
+											<c:choose>
+												<c:when test="${dn.get(loop.index).status!='OK'}">
+													<b id="red"><c:out value="${dn.get(loop.index).value}" /></b>
+												</c:when>
+												<c:otherwise>
+													<b>OK</b>
+												</c:otherwise>
+											</c:choose>
+										</td>
 										<td>
 										<a
 										href="#modal-container-164568" role="button"

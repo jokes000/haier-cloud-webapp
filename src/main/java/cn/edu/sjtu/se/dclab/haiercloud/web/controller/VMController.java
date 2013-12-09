@@ -67,6 +67,7 @@ public class VMController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET, produces="application/json")
 	public @ResponseBody Map<String, Object> getVMJson() {
 		Map<String, Object> modalMap = new HashMap<String, Object>(2);
+		
 		try {
 			List<VirtualMachine> vmList = vmService.getVirtualMachineList();
 			List<Map<String, String>> data = new ArrayList<Map<String, String>>();

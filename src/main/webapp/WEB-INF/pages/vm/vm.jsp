@@ -24,8 +24,11 @@
 						<th width="100px">虚拟机名</th>
 						<th width="100px">IP</th>
 						<th width="80px">CPU</th>
+						<th width="80px">CPU空闲率</th>
 						<th width="80px">内存</th>
+						<th width="80px">剩余内存</th>
 						<th width="80px">硬盘</th>
+						<th width="80px">空磁盘空间</th>
 						<th width="80px">带宽</th>
 					</tr>
 				</thead>
@@ -35,8 +38,42 @@
 							<td><c:out value="${vm.name}" /></td>
 							<td><c:out value="${vm.ip}" /></td>
 							<td><c:out value="${vm.cpu}核" /></td>
-							<td><c:out value="${vm.memory}G" /></td>
-							<td><c:out value="${vm.storage}G" /></td>
+							<td>
+								<c:choose>
+								<c:when test="${vm.cpu_idle.status!='OK' }">
+									<b id="red"><c:out value="${vm.cpu_idle.value}" /></b>
+								</c:when>
+								<c:otherwise>
+									<b><c:out value="${vm.cpu_idle.value}" /></b>
+								</c:otherwise>
+								</c:choose>
+							</td>
+							<td>
+								<c:out value="${vm.memory}G" />
+							</td>
+							<td>
+								<c:choose>
+								<c:when test="${vm.mem_free.status!='OK' }">
+									<b id="red"><c:out value="${vm.mem_free.value}" /></b>
+								</c:when>
+								<c:otherwise>
+									<b><c:out value="${vm.mem_free.value}" /></b>
+								</c:otherwise>
+								</c:choose>
+							</td>
+							<td>
+								<c:out value="${vm.storage}G" />
+							</td>
+							<td>
+								<c:choose>
+								<c:when test="${vm.disk_free.status!='OK' }">
+									<b id="red"><c:out value="${vm.disk_free.value}" /></b>
+								</c:when>
+								<c:otherwise>
+									<b><c:out value="${vm.disk_free.value}" /></b>
+								</c:otherwise>
+								</c:choose>
+							</td>
 							<td><c:out value="${vm.boardWidth}Mbps" />
 						</tr>
 					</c:forEach>

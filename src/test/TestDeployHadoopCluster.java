@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import cn.edu.sjtu.se.dslab.haiercloud.deploy.ClusterArguments;
 
-public class TestDeployHadoopCluster {
+public class TestDeployHadoopCluster extends TestCase {
 
 	@Test
 	public void testAddNode() {
