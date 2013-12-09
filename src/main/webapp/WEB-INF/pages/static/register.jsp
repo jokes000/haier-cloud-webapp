@@ -59,7 +59,7 @@ legend {
 						</div>
 						
 						<div class="control-group">
-							<input class="btn btn-primary" type="submit" />
+							<input class="btn btn-primary" type="submit" value="注册" />
 							<br>
 							<p style="margin-top:20px">已有帐户？<a href="<%=request.getContextPath()%>/login">登陆</a></p>
 						</div>

@@ -52,7 +52,7 @@ legend {
 							<input type="password" placeholder="密码" name="password">
 						</div>
 						<div class="control-group">
-							<input class="btn btn-primary" type="submit" />
+							<input class="btn btn-primary" type="submit" value="登录" />
 							<br>
 							<p style="margin-top:20px">没有帐户？<a href="<%=request.getContextPath()%>/register">注册一个</a></p>
 						</div>
