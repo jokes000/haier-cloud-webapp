@@ -22,6 +22,7 @@
 		<shiro.version>1.2.2</shiro.version>
 		<metamodel.version>3.4.5</metamodel.version>
 		<dom4j.version>1.6.1</dom4j.version>
+		<wink.server.version>1.4</wink.server.version>
 	</properties>
 	<!-- end of version of jars -->
 
@@ -360,10 +361,28 @@
 			<version>${dom4j.version}</version>
 		</dependency>
 		<!-- end of xml parsing -->
+
+		<dependency>
+			<groupId>org.apache.wink</groupId>
+			<artifactId>wink-server</artifactId>
+			<version>${wink.server.version}</version>
+		</dependency>
 	</dependencies>
 
 	<!-- Custom repositories -->
 	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>local private nexus</name>
+			<url>http://maven.oschina.net/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
 		<repository>
 			<id>springsource-milestones</id>
 			<name>SpringSource Milestones Proxy</name>
@@ -376,6 +395,22 @@
 		</repository>
 	</repositories>
 	<!-- end of Custom repositories -->
+
+	<!-- plugin repositories -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>nexus</id>
+			<name>local private nexus</name>
+			<url>http://maven.oschina.net/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+	<!-- end of plugin repositories -->
 
 	<build>
 		<finalName>haiercloud-webapp</finalName>

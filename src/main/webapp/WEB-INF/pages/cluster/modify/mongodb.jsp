@@ -182,7 +182,6 @@
 											class="btn btn-primary btn-small" data-toggle="modal"><i
 												class="icon-white icon-plus"></i>添加shard</a>
 									</th>
-									
 								</tr>
 							</thead>
 							<tbody>
