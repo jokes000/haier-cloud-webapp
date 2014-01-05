@@ -1,0 +1,45 @@
+//package cn.edu.sjtu.dclab.datatemplate;
+package ${package};
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cn.edu.sjtu.dclab.urlutil.Urlstr;
+import cn.edu.sjtu.dclab.urlutil.Urlutil;
+
+public class ${entityname} {
+	private static final String url = Urlstr.url;
+	
+#foreach($attr in $attributes)
+	private ${attr.type} ${attr.name};
+#end
+	
+	public ${entityname}()
+	{}
+	public ${entityname}(JSONObject obJson)
+	{
+		try {
+		#foreach($attr in $attributes)
+			this.set${attr.Bname}(obJson.get${attr.btype}("${attr.name}"));
+		#end			
+		} catch (JSONException e) {
+			// TODO: handle exception
+		}
+	}
+	
+#foreach($attr in $attributes)	
+	public void set${attr.bname}(${attr.type} ${attr.name})
+	{
+		this.${attr.name} = ${attr.name};
+	}
+
+	public ${attr.type} get${attr.bname}()
+	{
+		return this.${attr.name};
+	}
+#end
+}

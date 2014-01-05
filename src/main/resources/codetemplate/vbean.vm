@@ -1,0 +1,72 @@
+## the purpose of this template is to create the persistence entity vbean
+#**
+	The entity contains several property with particular type.
+	The property will be annotated with @Column to point out the column name in the table.
+	Certain associations will be presented to describe the relation among the entities. 
+**#
+
+package ${vbean.packageName};
+
+public class ${vbean.className} {
+	private Long id;
+	#foreach(${property} in ${vbean.properties})
+private $property.Type $property.Name;
+	#end
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	## Lob needs to be handled!
+	
+	#foreach( $property in $vbean.properties )
+	public $property.Type get${property.UpperName}() {
+		return $property.Name;
+	}
+	
+	public void set${property.UpperName}($property.Type $property.Name) {
+		this.${property.Name} = $property.Name;
+	}	
+	#end 
+	
+	
+	
+	#foreach( $association in $vbean.associations )
+private $association.Type $association.Name;
+	public $association.Type get${association.UpperName}(){
+		return $association.Name;
+	}
+	
+	public void set${association.UpperName}(${association.Name} $association.Name){
+		this.${association.Name} = $association.Name;
+	}
+#end
+
+
+public ${vbean.className}(org.json.JSONObject obJson)
+	{
+		try {
+		#foreach(${property} in ${vbean.properties})
+			#if(${property.Type}=="int")
+this.set${property.UpperName}(obJson.getInt("${property.Name}"));
+			#elseif(${property.Type}=="long")
+this.set${property.UpperName}(obJson.getLong("${property.Name}"));
+			#elseif(${property.Type}=="float")
+this.set${property.UpperName}(Float.valueOf(obJson.getString("${property.Name}")));
+			#elseif(${property.Type}=="double")
+this.set${property.UpperName}(obJson.getDouble("${property.Name}"));
+			#elseif(${property.Type}=="java.sql.Timestamp")
+this.set${property.UpperName}(java.sql.Timestamp.valueOf(obJson.getString("${property.Name}")));
+			#end
+		#end			
+			this.setId(obJson.getLong("id"));
+		} catch (org.json.JSONException e) {
+			// TODO: handle exception
+		}
+	}
+
+}

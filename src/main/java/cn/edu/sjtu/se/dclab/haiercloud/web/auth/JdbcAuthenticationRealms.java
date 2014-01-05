@@ -13,7 +13,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import cn.edu.sjtu.se.dclab.haiercloud.web.entity.User;
 import cn.edu.sjtu.se.dclab.haiercloud.web.service.IAuthService;
 
-public class JdbcAuthenticationRealm extends AuthorizationRealm {
+public class JdbcAuthenticationRealms extends AuthorizationRealm {
 
 	@Resource(name = "authService")
 	IAuthService authService;

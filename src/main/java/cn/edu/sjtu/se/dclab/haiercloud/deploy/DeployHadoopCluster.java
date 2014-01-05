@@ -203,10 +203,10 @@ public class DeployHadoopCluster implements DeployCluster {
 			File coreFile = new File(hadoopPath + "/conf/core-site.xml");
 			Document doc = builder.parse(coreFile);
 			doc.getElementsByTagName("value").item(0)
-					.setTextContent(nodesPath + "/hadooptmp");
+					.setNodeValue(nodesPath + "/hadooptmp");
 			// 指明fs.default.name所在
 			doc.getElementsByTagName("value").item(1)
-					.setTextContent("hdfs://" + masterIP + ":" + hdfsPort);
+					.setNodeValue("hdfs://" + masterIP + ":" + hdfsPort);
 			DOMSource domSource = new DOMSource(doc);
 			TransformerFactory tf = TransformerFactory.newInstance();
 			Transformer transformer = tf.newTransformer();
@@ -217,7 +217,7 @@ public class DeployHadoopCluster implements DeployCluster {
 			File mapredFile = new File(hadoopPath + "/conf/mapred-site.xml");
 			doc = builder.parse(mapredFile);
 			doc.getElementsByTagName("value").item(0)
-					.setTextContent(masterIP + ":" + mapredPort);
+					.setNodeValue(masterIP + ":" + mapredPort);
 			domSource = new DOMSource(doc);
 			transformer.transform(domSource, new StreamResult(
 					new FileOutputStream(mapredFile)));
@@ -226,7 +226,7 @@ public class DeployHadoopCluster implements DeployCluster {
 			File hdfsFile = new File(hadoopPath + "/conf/hdfs-site.xml");
 			doc = builder.parse(hdfsFile);
 			doc.getElementsByTagName("value").item(0)
-					.setTextContent(String.valueOf(dfsReplication));
+					.setNodeValue(String.valueOf(dfsReplication));
 			domSource = new DOMSource(doc);
 			transformer.transform(domSource, new StreamResult(
 					new FileOutputStream(hdfsFile)));

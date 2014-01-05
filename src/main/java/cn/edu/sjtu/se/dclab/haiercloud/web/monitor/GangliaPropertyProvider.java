@@ -20,11 +20,11 @@ public class GangliaPropertyProvider {
 	private StreamProvider streamProvider;
 
 	private String metricString = "";
-	
+
 	public GangliaPropertyProvider(StreamProvider streamProvider) {
 		this.streamProvider = streamProvider;
 	}
-	
+
 	/**
 	 * Get data through http request
 	 * 
@@ -36,7 +36,7 @@ public class GangliaPropertyProvider {
 	public VMStatus getMetrics(String hostname) throws Exception {
 		// contains all status info
 		VMStatus status = new VMStatus();
-		
+
 		// get specification
 		ApplicationContext appContext = new ClassPathXmlApplicationContext();
 		Resource resource = appContext.getResource("classpath:metrics.xml");
@@ -45,7 +45,6 @@ public class GangliaPropertyProvider {
 		Set<String> metrics = helper.getMetrics();
 		// get connection url
 		String spec = helper.getSpec(hostname);
-
 		// read stream
 		BufferedReader reader = null;
 		try {

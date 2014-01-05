@@ -9,7 +9,7 @@
 
 	<!-- 自定义shiro的realm数据库身份验证 -->
 	<bean id="jdbcAuthenticationRealm"
-		class="cn.edu.sjtu.se.dclab.haiercloud.web.auth.JdbcAuthenticationRealm">
+		class="cn.edu.sjtu.se.dclab.haiercloud.web.auth.JdbcAuthenticationRealms">
 		<property name="name" value="jdbcAuthentication" />
 		<property name="credentialsMatcher">
 			<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">

@@ -1,0 +1,56 @@
+## the purpose of this template is to create the persistence entity bean
+#**
+	The entity contains several property with particular type.
+	The property will be annotated with @Column to point out the column name in the table.
+	Certain associations will be presented to describe the relation among the entities. 
+**#
+
+package ${bean.packageName};
+
+@javax.persistence.Entity
+@javax.persistence.Table(name = "${bean.tableName}")
+public class ${bean.className} {
+	private Long id;
+	#foreach(${property} in ${bean.properties})
+private $property.Type $property.Name;
+	#end
+	
+	@javax.persistence.Id
+	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	## Lob needs to be handled!
+	
+	#foreach( $property in $bean.properties )
+@javax.persistence.Column(name = "$property.Column")
+	public $property.Type get${property.UpperName}() {
+		return $property.Name;
+	}
+	
+	public void set${property.UpperName}($property.Type $property.Name) {
+		this.${property.Name} = $property.Name;
+	}	
+	#end 
+	
+	
+	
+	#foreach( $association in $bean.associations )
+private $association.Type $association.Name;
+
+	@javax.persistence.ManyToOne(cascade={javax.persistence.CascadeType.ALL})
+	@javax.persistence.JoinColumn(name = "$association.JoinColumn")
+	public $association.Type get${association.UpperName}(){
+		return $association.Name;
+	}
+	
+	public void set${association.UpperName}(${association.Name} $association.Name){
+		this.${association.Name} = $association.Name;
+	}  
+	#end
+}
