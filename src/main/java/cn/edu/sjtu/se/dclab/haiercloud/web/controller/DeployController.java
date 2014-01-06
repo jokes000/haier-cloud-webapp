@@ -9,6 +9,7 @@ package cn.edu.sjtu.se.dclab.haiercloud.web.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import cn.edu.sjtu.se.dclab.haiercloud.deploy.ClusterArguments;
 import cn.edu.sjtu.se.dclab.haiercloud.deploy.DeployHadoopCluster;
 import cn.edu.sjtu.se.dclab.haiercloud.web.entity.Cluster;
 import cn.edu.sjtu.se.dclab.haiercloud.web.entity.Node;
+import cn.edu.sjtu.se.dclab.haiercloud.web.entity.User;
 import cn.edu.sjtu.se.dclab.haiercloud.web.entity.VirtualMachine;
 import cn.edu.sjtu.se.dclab.haiercloud.web.service.IClusterService;
 import cn.edu.sjtu.se.dclab.haiercloud.web.service.IDeployClusterService;
@@ -105,13 +107,14 @@ public class DeployController {
 	@RequestMapping(value = "/mongodb/submit", method = RequestMethod.POST)
 	public ModelAndView submitMongoDB(@RequestParam long[] configserver,
 			@RequestParam long[] mongos, @RequestParam long[] shard1,
-			@RequestParam long[] shard2, @RequestParam String clusterName) {
+			@RequestParam long[] shard2, @RequestParam String clusterName, HttpServletRequest request) {
 		// configure redirect
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/deploy/submit");
 		
 		// process
-		dcService.deployMongoDBCluster(configserver, mongos, shard1, shard2, clusterName);
+		User user = (User) request.getSession().getAttribute("user");
+		dcService.deployMongoDBCluster(configserver, mongos, shard1, shard2, clusterName, user);
 
 		return mav;
 	}

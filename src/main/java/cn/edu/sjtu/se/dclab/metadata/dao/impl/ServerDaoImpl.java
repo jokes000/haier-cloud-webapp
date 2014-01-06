@@ -26,4 +26,7 @@ public class ServerDaoImpl implements ServerDao {
 		return metaDataBaseDao.queryById(Server.class, id);
 	}
 
+	public void addServer(Server server){
+		metaDataBaseDao.save(server);
+	}
 }

@@ -7,5 +7,8 @@ import cn.edu.sjtu.se.dclab.haiercloud.web.entity.User;
 
 public interface ServerDao {
 	List<Server> getServerByUser(User user);
+
 	Server getServerByID(Long id);
+	
+	void addServer(Server server);
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metrics>
-	<ip>192.168.1.246</ip>
+	<ip>10.0.0.246</ip>
 
 	<metric>
 		<name>disk_free</name>

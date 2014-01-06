@@ -28,4 +28,9 @@ public class ServerServiceImpl implements ServerService {
 	public Server getServerByID(Long id){
 		return serverDao.getServerByID(id);
 	}
+	
+	@Transactional
+	public void addServer(Server server){
+		serverDao.addServer(server);
+	}
 }

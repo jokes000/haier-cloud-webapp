@@ -21,6 +21,7 @@ import cn.edu.sjtu.se.dclab.metadata.dao.bean.Deploy;
 import cn.edu.sjtu.se.dclab.metadata.dao.bean.Relation;
 import cn.edu.sjtu.se.dclab.metadata.dao.bean.Server;
 import cn.edu.sjtu.se.dclab.metadata.dao.bean.TableMeta;
+import cn.edu.sjtu.se.dclab.codegen.integration.IntegrateAll;
 import cn.edu.sjtu.se.dclab.haiercloud.web.entity.User;
 import cn.edu.sjtu.se.dclab.metadata.service.intf.ColumnMetaService;
 import cn.edu.sjtu.se.dclab.metadata.service.intf.DatabaseMetaService;
@@ -168,7 +169,10 @@ public class DeployMetaDataController {
 			}
 			deploy.setMsg(msg);
 			deploy.setStatus(status);
-			deployService.createDeploy(deploy);				
+			deployService.createDeploy(deploy);
+			
+			IntegrateAll ia = new IntegrateAll();
+			ia.integrate();
 		}
 		if(server.getType().equals("mongodb")){
 			Iterator<String> it = tableid_list.iterator();
