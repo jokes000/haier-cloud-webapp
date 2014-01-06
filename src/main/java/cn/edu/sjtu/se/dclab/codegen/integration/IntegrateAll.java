@@ -142,26 +142,27 @@ public class IntegrateAll {
 			System.out.println(shellPath);
 
 			try {
-//				Process p = Runtime.getRuntime()
-//						.exec(shellPath + "maven.sh" + " "
-//								+ srcDir.getAbsolutePath());
-//
-//				readBuffer(p.getInputStream(), p.getErrorStream());
-//				p.waitFor();
-//
-//				Process p2 = Runtime.getRuntime().exec(
-//						shellPath + "maven.sh" + " " + jarDirPath);
-//
-//				readBuffer(p2.getInputStream(), p2.getErrorStream());
-//				p2.waitFor();
+				Process p = Runtime.getRuntime()
+						.exec(shellPath + "maven.sh" + " "
+								+ srcDir.getAbsolutePath());
 
-				/*Process pp = Runtime.getRuntime().exec(
+				readBuffer(p.getInputStream(), p.getErrorStream());
+				p.waitFor();
+
+				Process p2 = Runtime.getRuntime().exec(
+						shellPath + "maven.sh" + " " + jarDirPath);
+
+				readBuffer(p2.getInputStream(), p2.getErrorStream());
+				p2.waitFor();
+
+				Process pp = Runtime.getRuntime().exec(
 						shellPath + "pushToTomcat.sh" + " " + tomcatMachineUser
 								+ " " + tomcatMachineIP + " "
 								+ tomcatMachinePassword + " " + tomcatPath
-								+ " " + warDirPath+"/target/datanucleus-samples-jpa-tutorial-3.2.war");
+								+ " " + warDirPath+"/target/datanucleus-samples-jpa-tutorial-3.2.war"
+								+ " " + jarDirPath+"/target/codegenerate-1.0.0.jar");
 				readBuffer(pp.getInputStream(), pp.getErrorStream());
-				pp.waitFor();*/
+				pp.waitFor();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

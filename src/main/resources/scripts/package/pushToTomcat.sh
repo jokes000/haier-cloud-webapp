@@ -1,12 +1,13 @@
 #!/usr/bin/expect
 
-#pushToTomcat.sh username ip password path warfile
+#pushToTomcat.sh username ip password path warfile jarfile
 
 set username [lindex $argv 0]
 set ip [lindex $argv 1]
 set password [lindex $argv 2]
 set path [lindex $argv 3]
 set warfile [lindex $argv 4]
+set jarfile [lindex $argv 5]
 
 spawn scp $warfile $username@$ip:$path/webapps/
 expect {
@@ -20,6 +21,19 @@ expect {
 		exp_continue
 	}
 	eof
+}
+spawn scp $jarfile $username@$ip:$path/webapps/ROOT/
+expect {
+    "(yes/no)?" {
+        send "yes\n"
+        exp_continue
+    }
+    "password:" {
+        send "$password\n"
+        expect "100%"
+        exp_continue
+    }
+    eof
 }
 spawn ssh $username@$ip
 expect {
