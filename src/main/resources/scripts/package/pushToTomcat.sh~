@@ -38,15 +38,6 @@ expect {
 		expect eof 
 		exit
 	}
-	"\r\n" {
-		send "$path/bin/shutdown.sh\n"
-		expect "tomcat-juli.jar"
-		send "$path/bin/startup.sh\n"
-		expect "tomcat-juli.jar"
-		send "exit\n"
-		expect eof 
-		exit	
-	}
 	eof
 }
 exit

@@ -5,22 +5,21 @@
 
     <!-- Tutorial "unit" -->
     #foreach($datasource in $datasources)
-<persistence-unit name="${datasource.type}-${datasource.name}${datasource.index}">
+<persistence-unit name="Tutorial">
         #foreach($bean in $datasource.getVbs())
         <class>${bean.packageName}.${bean.className}</class>
         #end
         <exclude-unlisted-classes/>
 
-
         	<properties>
             #if($datasource.type=="mysql")
 <!-- ENABLE THESE FOR H2 -->
-	            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://${datasource.url}/${datasource.databaseName}?characterEncoding=utf-8"/>
-	            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-	            <property name="javax.persistence.jdbc.user" value="${datasource.user}"/>
-	            <property name="javax.persistence.jdbc.password" value="${datasource.password}"/>
+	            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://${datasource.url}/${datasource.databaseName}" />
+	            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+	            <property name="javax.persistence.jdbc.user" value="${datasource.user}" />
+	            <property name="javax.persistence.jdbc.password" value="${datasource.password}" />
             #elseif($datasource.type=="mongodb")
-            <property name="javax.persistence.jdbc.url" value="mongodb:/${datasource.url}"/> 
+            <property name="javax.persistence.jdbc.url" value="mongodb:/${datasource.url}" /> 
             #end
 </properties>
     </persistence-unit>
