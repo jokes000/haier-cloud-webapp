@@ -1,6 +1,6 @@
 #!/usr/bin/expect
 
-#pushToTomcat.sh username ip password path warfile
+#pushToTomcat.sh username ip password path warfile jarfile
 
 set username [lindex $argv 0]
 set ip [lindex $argv 1]
