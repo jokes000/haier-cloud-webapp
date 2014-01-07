@@ -435,6 +435,7 @@ public class DeployClusterServiceImpl implements IDeployClusterService {
 
 		// success or fail process
 		if (ret) { // success
+			System.out.println("change the cluster's status!!");
 			cluster.setStatus(VirtualMachine.STABLE);
 			for (VirtualMachine vm : cluster.getVms()) {
 				vm.setStatus(VirtualMachine.STABLE);
