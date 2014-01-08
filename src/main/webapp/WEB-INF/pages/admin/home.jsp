@@ -12,13 +12,17 @@
 		<ul class="nav nav-list" id="navlist">
 			<li class="nav-header">用户管理</li>
 			<li><a href="<%=request.getContextPath()%>/admin/user">用户列表</a></li>
+			<!--
 			<li><a href="<%=request.getContextPath()%>/admin/user/add">添加用户</a></li>
+			-->
 			<li class="nav-header">群组管理</li>
 			<li><a href="<%=request.getContextPath()%>/admin/group">群组列表</a></li>
 			<li><a href="<%=request.getContextPath()%>/admin/group/add">添加群组</a></li>
 			<li class="nav-header">权限管理</li>
 			<li><a href="<%=request.getContextPath()%>/admin/permission">权限列表</a></li>
+			<!--  
 			<li><a href="<%=request.getContextPath()%>/admin/permission/add">添加权限</a></li>
+		    -->
 		</ul>
 	</aside>
 

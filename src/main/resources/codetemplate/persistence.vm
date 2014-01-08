@@ -19,7 +19,7 @@
 	            <property name="javax.persistence.jdbc.user" value="${datasource.user}" />
 	            <property name="javax.persistence.jdbc.password" value="${datasource.password}" />
             #elseif($datasource.type=="mongodb")
-            <property name="javax.persistence.jdbc.url" value="mongodb:/${datasource.url}" /> 
+            <property name="javax.persistence.jdbc.url" value="mongodb:${datasource.url}/${datasource.databaseName}" /> 
             #end
 </properties>
     </persistence-unit>

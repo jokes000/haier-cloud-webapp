@@ -79,20 +79,15 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<!-- spring cache support -->
-	<!--  
 	<bean id="ehCacheManagerFactory"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="classpath:ehcache.xml" />
 	</bean>
-	-->
+
 	<!-- spring ehcache management -->
-	<!--  
 	<bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
 		<property name="cacheManager" ref="ehCacheManagerFactory"></property>
 	</bean>
-	-->
 	<!-- ehcache annotation configuration -->
-	<!--  
 	<cache:annotation-driven cache-manager="ehCacheManager" />
-	-->
 </beans>

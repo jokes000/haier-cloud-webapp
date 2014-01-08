@@ -49,14 +49,14 @@
 				</shiro:hasPermission>
 
 				<!-- 3rd li -->
-				<shiro:hasPermission name="menu:metadata">
+				<shiro:hasPermission name="metadata">
 					<li><a href="${pageContext.request.contextPath}/metadata"
 						data-toggle="dropdown" class="dropdown-toggle">元数据管理<strong
 							class="caret"></strong></a></li>
 				</shiro:hasPermission>
 
 				<!-- 4th li -->
-				<shiro:hasPermission name="menu:cluster">
+				<shiro:hasPermission name="cluster">
 					<li class="dropdown pull-right"><a href="#"
 						data-toggle="dropdown" class="dropdown-toggle">集群管理<strong
 							class="caret"></strong></a>

@@ -22,20 +22,16 @@
 
 	<!-- shiro 的缓存管理,使用spring的ehCacheManagerFactory, 操作spring缓存工厂来及时更新shiro的缓存管理 
 		ehCacheManagerFactory对象在applicationContext-core.xml中配置 -->
-	<!-- 
 	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
 		<property name="cacheManager" ref="ehCacheManagerFactory" />
 	</bean>
-	-->
 
 	<!-- 使用默认的WebSecurityManager -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<!-- realm认证和授权,从数据库读取资源 -->
 		<property name="realm" ref="jdbcAuthenticationRealm" />
 		<!-- cacheManager,集合spring缓存工厂 -->
-		<!--  
 		<property name="cacheManager" ref="cacheManager" />
-		-->
 		<!-- rememberMeManager使用自定义的org.exitsoft.showcase.service.account.CustomRememberMeManager -->
 		<!--  
 		<property name="rememberMeManager" ref="customRememberMeManager" />

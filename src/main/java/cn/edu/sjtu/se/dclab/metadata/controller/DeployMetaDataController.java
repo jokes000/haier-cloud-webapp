@@ -196,6 +196,9 @@ public class DeployMetaDataController {
 			deploy.setMsg(msg);
 			deploy.setStatus(status);
 			deployService.createDeploy(deploy);	
+			
+			IntegrateAll ia = new IntegrateAll();
+			ia.integrate();
 		}
 		return mv;
 	}

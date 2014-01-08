@@ -193,17 +193,17 @@ public class PersistenceGenerator {
 				if (nodeName.equals("name")) {
 					datasourceName = node.getFirstChild().getNodeValue();
 				}
-				if (nodeName.equals("type")) {
-					databaseType = node.getFirstChild().getNodeValue();
-				} else if (nodeName.equals("database")) {
+				if (nodeName.equals("type") && node.hasChildNodes()) {
+						databaseType = node.getFirstChild().getNodeValue();
+				} else if (nodeName.equals("database") && node.hasChildNodes()) {
 					databaseName = node.getFirstChild().getNodeValue();
-				} else if (nodeName.equals("host")) {
+				} else if (nodeName.equals("host") && node.hasChildNodes()) {
 					host = node.getFirstChild().getNodeValue();
-				} else if (nodeName.equals("port")) {
+				} else if (nodeName.equals("port") && node.hasChildNodes()) {
 					port = node.getFirstChild().getNodeValue();
-				} else if (nodeName.equals("user")) {
+				} else if (nodeName.equals("user") && node.hasChildNodes()) {
 					user = node.getFirstChild().getNodeValue();
-				} else if (nodeName.equals("password")) {
+				} else if (nodeName.equals("password") && node.hasChildNodes()) {
 					password = node.getFirstChild().getNodeValue();
 				}
 			}

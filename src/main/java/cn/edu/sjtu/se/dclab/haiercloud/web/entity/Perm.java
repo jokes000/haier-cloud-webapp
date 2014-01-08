@@ -32,7 +32,7 @@ public class Perm implements Serializable {
 	@Column(length = 512)
 	private String remark;
 	// shiro permission 字符串
-	@Column(unique = true, length = 64)
+	@Column(unique = true, length = 256)
 	private String permission;
 
 	/**
