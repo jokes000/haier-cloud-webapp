@@ -8,7 +8,9 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <div class="container">
-
-<c:out value="${user.username}" />
-
+    <div class="row">
+        <div class="span12">
+            
+        </div>
+    </div>
 </div>

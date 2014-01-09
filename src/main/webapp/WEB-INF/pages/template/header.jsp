@@ -15,7 +15,6 @@
 						<ul class="dropdown-menu">
 							<li><a href="<%=request.getContextPath()%>/home">我的主页</a></li>
 							<li><a href="<%=request.getContextPath()%>/account">个人资料</a></li>
-							<li><a href="<%=request.getContextPath()%>/metadata">元数据管理</a></li>
 							<li class="divider">
 							<li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
 						</ul></li>
@@ -50,9 +49,7 @@
 
 				<!-- 3rd li -->
 				<shiro:hasPermission name="metadata">
-					<li><a href="${pageContext.request.contextPath}/metadata"
-						data-toggle="dropdown" class="dropdown-toggle">元数据管理<strong
-							class="caret"></strong></a></li>
+					<li><a href="${pageContext.request.contextPath}/metadata">元数据管理</a></li>
 				</shiro:hasPermission>
 
 				<!-- 4th li -->
