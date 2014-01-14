@@ -43,6 +43,7 @@ import cn.edu.sjtu.se.dclab.metadata.dao.bean.Deploy;
 import cn.edu.sjtu.se.dclab.metadata.dao.bean.FKMeta;
 import cn.edu.sjtu.se.dclab.metadata.dao.bean.Server;
 import cn.edu.sjtu.se.dclab.metadata.dao.bean.TableMeta;
+import cn.edu.sjtu.se.dclab.codegen.integration.IntegrateAll;
 import cn.edu.sjtu.se.dclab.haiercloud.web.entity.User;
 import cn.edu.sjtu.se.dclab.metadata.dao.intf.ColumnMetaDao;
 import cn.edu.sjtu.se.dclab.metadata.dao.intf.DeployDao;
@@ -155,6 +156,7 @@ public class DeployServiceImpl implements DeployService {
 			System.out.println(e.toString());
 			return e.toString();
 		}
+		
 		return "success";
 	}
 

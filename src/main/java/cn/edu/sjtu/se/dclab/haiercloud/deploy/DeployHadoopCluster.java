@@ -151,7 +151,28 @@ public class DeployHadoopCluster implements DeployCluster {
 			e.printStackTrace();
 		}
 	}
-
+/*	
+	//压缩打包
+	private void mytar(String tarName,String file){
+		try{
+			Process p = Runtime.getRuntime().exec(shellPath + "/mytar.sh" + " " + tarName + " " + file);
+			readBuffer(p.getInputStream(),p.getErrorStream());
+			p.waitFor();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	//解压缩
+	private void unMytar(String tarName,String file){
+		try{
+			Process p = Runtime.getRuntime().exec(shellPath + "/unMytar.sh" + " " + tarName + " " + file);
+			readBuffer(p.getInputStream(),p.getErrorStream());
+			p.waitFor();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+*/
 	// 在集群内的所有节点上安装jdk
 	private void installJDK(String nodeIP, String nodePassword) {
 		output("Start to copy jdk files to the machine whose ip is " + nodeIP);

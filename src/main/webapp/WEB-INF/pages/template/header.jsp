@@ -14,7 +14,9 @@
 							class="caret"></strong></a>
 						<ul class="dropdown-menu">
 							<li><a href="<%=request.getContextPath()%>/home">我的主页</a></li>
+							<!--  
 							<li><a href="<%=request.getContextPath()%>/account">个人资料</a></li>
+							-->
 							<li class="divider">
 							<li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
 						</ul></li>
@@ -58,6 +60,8 @@
 						data-toggle="dropdown" class="dropdown-toggle">集群管理<strong
 							class="caret"></strong></a>
 						<ul class="dropdown-menu">
+                            <li><a href="${pageContext.request.contextPath}/vm">虚拟机管理</a></li>
+                            <li class="divider">
 							<li><a href="<%=request.getContextPath()%>/cluster">现有集群</a></li>
 							<li class="divider">
 							<li><a href="<%=request.getContextPath()%>/deploy">部署集群</a></li>

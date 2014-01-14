@@ -377,6 +377,11 @@
 
 	<!-- Custom repositories -->
 	<repositories>
+        <repository>
+            <id>public</id>
+            <name>Public Repositories</name>
+            <url>http://192.168.1.246:18080/nexus/content/groups/public/</url>
+        </repository>
 		<repository>
 			<id>nexus</id>
 			<name>local private nexus</name>

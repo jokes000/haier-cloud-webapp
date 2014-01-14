@@ -17,9 +17,8 @@
 				<c:forEach var="item" items="${clusterList}">
 					<li class="span4">
 						<div class="thumbnail">
-							<a href="<%=request.getContextPath()%>/${item.name}_status"><img
-								width="300" height="180"
-								src="<%=request.getContextPath()%>/resource/img/${item.meta.name}.jpg" /></a>
+							<img width="300" height="180"
+								src="<%=request.getContextPath()%>/resource/img/${item.meta.name}.jpg" />
 							<div class="caption">
 								<h3>${item.name}</h3>
 								<p>${item.meta.name }集群，目前有${fn:length(item.vms) }台机器。</p>
@@ -40,8 +39,7 @@
 										</p>
 									</c:otherwise>
 								</c:choose>
-								<a href="<%=request.getContextPath()%>/mock_monitoring"><button
-										class="btn btn-primary" disabled="disabled">监控</button></a> <a
+								<a
 									href="<%=request.getContextPath()%>/cluster/modify/${item.id}"><button
 										class="btn btn-primary">修改</button></a>
 							</div>

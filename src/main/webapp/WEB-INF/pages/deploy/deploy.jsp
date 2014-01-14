@@ -31,6 +31,7 @@
 							</div>
 						</div>
 					</li>
+					<!--  
 					<li class="span4">
 						<div class="thumbnail">
 							<a href="<%=request.getContextPath()%>/deploy/mysql"><img
@@ -41,6 +42,7 @@
 							</div>
 						</div>
 					</li>
+					-->
 				</ul>
 			</div>
 		</div>

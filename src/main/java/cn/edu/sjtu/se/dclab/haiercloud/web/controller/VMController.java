@@ -36,16 +36,15 @@ public class VMController {
 	}
 
 	@RequestMapping(value = "/add/submit", method = RequestMethod.POST)
-	public ModelAndView vmSubmit(VirtualMachine vm) {
+	public String vmSubmit(VirtualMachine vm) {
 		// configure redirect
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("vm");
+		//ModelAndView mav = new ModelAndView();
 
 		// process data
 		mockAllocateVM(vm);
 		vmService.addVirtualMachine(vm);
 
-		return mav;
+		return "redirect:/vm";
 	}
 
 	public VirtualMachine mockAllocateVM(VirtualMachine vm) {
@@ -61,6 +60,8 @@ public class VMController {
 		mac.append(random.nextInt(10));
 		vm.setMac(mac.toString());
 
+		vm.setPassword("111111");
+		
 		return vm;
 	}
 	
